@@ -1,0 +1,34 @@
+# Files
+README.md
+npm-debug.log
+run.js
+.eslintignore
+.eslintrc.json
+
+# Directories 
+examples_data/
+docs/
+test/
+node_modules/
+report/
+img/**/*
+
+# Apple Stuff
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
