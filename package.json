@@ -8,6 +8,7 @@
     "url": "git+https://github.com/Be8-Systems/be8-backend.git"
   },
   "scripts": {
+    "start": "node index.mjs",
     "test": "c8 node --test ./backend/test/",
     "lint": "npx eslint . --fix"
   },
@@ -24,5 +25,9 @@
     "redis": "^4.0.4",
     "util": "^0.12.4",
     "web-push": "^3.4.5"
+  },
+  "devDependencies": {
+    "ganescha-concat": "0.0.8",
+    "node-fetch": "^3.2.4"
   }
 }
