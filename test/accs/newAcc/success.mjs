@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'assert/strict';
-import { baseUrl, newAccOptions } from '../utils/utils.mjs';
+import { baseUrl, newAccOptions } from '../../utils/utils.mjs';
 
 const options = newAccOptions();
 
-test('newAcc', async function () {
+test('SUCCESS newAcc', async function () {
     const response = await fetch(`${baseUrl()}/newAcc`, options);
     const data = await response.json();
     

@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
 
-test('startConversation', async function () {
+test('SUCCESS startConversation', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);

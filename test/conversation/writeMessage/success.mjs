@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
 const nickname = randomString(10);
 const firstAccOptions = newAccOptions(nickname);
 const secondAccOptions = newAccOptions();
 
-test('getMessages', async function () {
+test('SUCCESS writeMessage', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
@@ -31,22 +31,9 @@ test('getMessages', async function () {
     };
     const writeMessageOptions = getPostOptions(writeBody, cookie);
     const writeResponse = await nodeFetch(`${baseUrl()}/writemessage`, writeMessageOptions);
-    // get message
-    const messagesBody = { threadID: conversation.threadID };
-    const getMessagesOptions = getPostOptions(messagesBody, cookie);
-    const messagesResponse = await nodeFetch(`${baseUrl()}/getmessages`, getMessagesOptions);
-    const messages = await messagesResponse.json();
-    const systemMessage = messages.messages[0];
-    const firstMessage = messages.messages[1];
+    const write = await writeResponse.json();
+    const messageID = `message:${conversation.threadID}:2`;
     
-    assert.strictEqual(messages.messages.length, 2);
-    assert.strictEqual(systemMessage.messageID, '1');
-    assert.strictEqual(systemMessage.type, 'system');
-    assert.strictEqual(firstMessage.messageID, '2');
-    assert.strictEqual(firstMessage.type, 'textMessage');
-    assert.strictEqual(firstMessage.receiver, secondAccData.accID + '');
-    assert.strictEqual(firstMessage.sender, firstAccData.accID + '');
-    assert.strictEqual(firstMessage.nickname, nickname);
-    assert.strictEqual(firstMessage.threadID, conversation.threadID);
-    return assert(messages.valid);
+    assert.strictEqual(write.messageID, messageID);
+    return assert(write.valid);
 });
