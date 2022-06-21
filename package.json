@@ -1,0 +1,28 @@
+{
+  "name": "be8-backend",
+  "version": "1.0.0",
+  "description": "Are you still using whatsapp?",
+  "main": "index.mjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Be8-Systems/be8-backend.git"
+  },
+  "scripts": {
+    "test": "c8 node --test ./backend/test/",
+    "lint": "npx eslint . --fix"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-redis6": "https://github.com/Be8-Systems/connect-redis6",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "greenlock-express": "^4.0.3",
+    "ngrok": "^4.3.1",
+    "redis": "^4.0.4",
+    "util": "^0.12.4",
+    "web-push": "^3.4.5"
+  }
+}
