@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.mjs",
-    "test": "c8 node --test ./backend/test/",
+    "test": "c8 node --test ./test/",
     "lint": "npx eslint . --fix"
   },
   "dependencies": {
