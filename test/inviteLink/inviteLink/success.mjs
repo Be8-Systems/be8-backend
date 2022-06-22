@@ -1,14 +1,14 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
-import redis from '../../lib/util/redis.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
+import redis from '../../../lib/util/redis.mjs';
 
 const nickname = randomString(10);
 const accOptions = newAccOptions(nickname);
 
-test('inviteLink', async function (t) {
+test('SUCCESS inviteLink', async function (t) {
     const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     
