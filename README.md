@@ -1,9 +1,7 @@
 # be8-backend
-Are you still using whatsapp?
-
 Server for the be8 messenger.
 
-## Routes
+# Routes
 ## accs
 Handling for the be8 acc object:
 
@@ -17,7 +15,7 @@ Handling for the be8 acc object:
 }
 ```
 
-### newAcc
+### /newacc
 
 ```javascript
 const body = {
@@ -31,7 +29,7 @@ fetch('/newacc', {
 });
 ```
 
-### me
+### /me
 Returns the acc (without password) of the actual session.
 
 ```javascript
@@ -40,7 +38,7 @@ fetch('/me', {
 });
 ```
 
-### changeNickname
+### /changenickname
 User can change his nick every time and as often as he wants to.
 
 ```javascript
@@ -55,7 +53,7 @@ fetch('/changeNickname', {
 });
 ```
 
-### destroyAcc
+### /destroyacc
 Deletes the acc of the actual session and all conversations of the acc. If acc is a group admin, the group will be deleted too.
 
 ```javascript
