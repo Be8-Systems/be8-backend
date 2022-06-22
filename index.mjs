@@ -81,6 +81,7 @@ app.use(session({
     }
 }));
 app.use(compression());
+app.use('/', Express.static('./node_modules/be8-frontend/dist/'));
 app.use('/', Express.static('./node_modules/be8-frontend/dist/prod'));
 
 newAccRoute(app);
