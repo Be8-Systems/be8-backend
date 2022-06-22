@@ -1,18 +1,24 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
-const firstAccOptions = newAccOptions();
-const secondAccOptions = newAccOptions();
+const nickname1 = randomString(10);
+const nickname2 = randomString(10);
+const firstAccOptions = newAccOptions(nickname1);
+const secondAccOptions = newAccOptions(nickname2);
+const thirdAccOptions = newAccOptions();
 
-test('groupLeaveMember', async function () {
+test('FAIL groupGetMembers', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
+    const firstAccData = await firstAcc.json();
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
+    const thirdAcc = await nodeFetch(`${baseUrl()}/newAcc`, thirdAccOptions);
+    const thirdAccCookie = thirdAcc.headers.get('set-cookie');
     // create group
     const groupBody = {
         nickname: randomString(7),
@@ -29,15 +35,14 @@ test('groupLeaveMember', async function () {
     const addOptions = getPostOptions(addBody, cookie);
     const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     const added = await addResponse.json();
-    // leave group
-    const leaveBody = {
-        groupID: group.groupID,
-        accID: secondAccData.accID + ''
+    // get members
+    const membersBody = {
+        groupID: group.groupID
     };
-    const leaveOptions = getPostOptions(leaveBody, secondAcc.headers.get('set-cookie'));
-    const leaveResponse = await nodeFetch(`${baseUrl()}/groupleavemember`, leaveOptions);
-    const leaved = await leaveResponse.json();
+    const membersOptions = getPostOptions(membersBody, thirdAccCookie);
+    const membersResponse = await nodeFetch(`${baseUrl()}/groupgetmembers`, membersOptions);
+    const failMembers = await membersResponse.json();
     
-    assert.strictEqual(leaved.groupMembers.includes(secondAccData.accID + ''), false);
-    return assert(leaved.valid);
+    assert.strictEqual(failMembers.reason, 'NOGROUPMEMBER');
+    return assert(!failMembers.valid);
 });

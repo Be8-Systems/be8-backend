@@ -8,11 +8,12 @@ const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
 const thirdAccOptions = newAccOptions();
 
-test('FAIL groupAddMember', async function () {
+test('FAIL groupKickMember', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
     const thirdAcc = await nodeFetch(`${baseUrl()}/newAcc`, thirdAccOptions);
+    const firstAccData = await firstAcc.json();
     const secondAccData = await secondAcc.json();
     const thirdAccData = await thirdAcc.json();
     const adminCookie = firstAcc.headers.get('set-cookie');
@@ -20,7 +21,7 @@ test('FAIL groupAddMember', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'private'
+        groupType: 'public'
     };
     const groupOptions = getPostOptions(groupBody, adminCookie);
     const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
@@ -31,31 +32,28 @@ test('FAIL groupAddMember', async function () {
         memberID: secondAccData.accID + ''
     };
     const addOptions = getPostOptions(addBody, adminCookie);
+    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const added = await addResponse.json();
 
-    await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     // fail tests
     const failBodies = [{
         groupID: group.groupID,
-        memberID: '134342534', // not existing acc
-        reason: 'MEMBERNOTEXISTING'
+        accID: secondAccData.accID + '',
+        reason: 'NOTADMIN' // try to kick without being admin
     }, {
         groupID: 'g1234563545', // not existing group
-        memberID: secondAccData.accID + '',
+        accID: secondAccData.accID + '',
         reason: 'GROUPNOTEXISTING'
     }, {
         groupID: group.groupID,
-        memberID: secondAccData.accID + '', // already joined
-        reason: 'ISALREADYMEMBER'
-    }, {
-        groupID: group.groupID,
-        memberID: thirdAccData.accID + '', // non admin trying to add
-        reason: 'NOTADMIN'
+        accID: firstAccData.accID + '', // circular
+        reason: 'CIRCULARKICK'
     }];
-    const proms = failBodies.map(function (convBody, i) {
-        const cookie = i === 3 ? userCookie : adminCookie;
-        const addMemberOptions = getPostOptions(convBody, cookie);
+    const proms = failBodies.map(function (kickBody, i) {
+        const cookie = i === 0 ? userCookie : adminCookie;
+        const addMemberOptions = getPostOptions(kickBody, cookie);
 
-        return nodeFetch(`${baseUrl()}/groupaddmember`, addMemberOptions);
+        return nodeFetch(`${baseUrl()}/groupkickmember`, addMemberOptions);
     });
     const responses = await Promise.all(proms);
     

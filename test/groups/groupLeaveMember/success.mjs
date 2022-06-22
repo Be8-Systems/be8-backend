@@ -1,13 +1,13 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
 
-test('groupGetCurrentVersion', async function () {
+test('SUCCESS groupLeaveMember', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
@@ -29,12 +29,15 @@ test('groupGetCurrentVersion', async function () {
     const addOptions = getPostOptions(addBody, cookie);
     const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     const added = await addResponse.json();
-    // get current version
-    const versionOptions = getPostOptions({ groupID: group.groupID }, cookie);
-    const currentVersionResponse = await nodeFetch(`${baseUrl()}/groupgetcurrentversion`, versionOptions);
-    const currentVersion = await currentVersionResponse.json();
+    // leave group
+    const leaveBody = {
+        groupID: group.groupID,
+        accID: secondAccData.accID + ''
+    };
+    const leaveOptions = getPostOptions(leaveBody, secondAcc.headers.get('set-cookie'));
+    const leaveResponse = await nodeFetch(`${baseUrl()}/groupleavemember`, leaveOptions);
+    const leaved = await leaveResponse.json();
     
-    assert.strictEqual(typeof currentVersion.groupVersion, 'string');
-    assert(!isNaN(currentVersion.groupVersion));
-    return assert(currentVersion.valid);
+    assert.strictEqual(leaved.groupMembers.includes(secondAccData.accID + ''), false);
+    return assert(leaved.valid);
 });

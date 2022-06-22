@@ -1,15 +1,15 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
 const nickname1 = randomString(10);
 const nickname2 = randomString(10);
 const firstAccOptions = newAccOptions(nickname1);
 const secondAccOptions = newAccOptions(nickname2);
 
-test('groupGetMembers', async function () {
+test('SUCCESS groupGetMembers', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);

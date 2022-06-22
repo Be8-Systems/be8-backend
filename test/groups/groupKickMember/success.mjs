@@ -1,14 +1,13 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
-const groupKey = 'J8KFhFn+obMLmvcJVc0rOocIgDvK3EWApKERyStxltLYViM8QmSc5+8H09cvbi3xGRuVfocSWXtGyamSKbxyfC721PGKM4KXUkGKLq+UJbj2HcPsUjki/kwmajGFbRbj6x8vNQ4CaaUER3s668Kzcvq/9s329crMPnXg/tzrZXfWJmAM9dqt5Rk4LyOcB7xDDniLOTQmSk3sKOJ3Pk0aLfydj3dmr1fBJrfPBdPIDqIdRN/FCySqcsgiLWanT0s5dqk9k1hurWmZdbuHjCiF2wa+NWGKydQF6Vk9Ve5L/iRJgvXFNXk6q24u6PPFaWIJ';
 
-test('groupStoreKey', async function () {
+test('SUCCESS groupKickMember', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
@@ -29,17 +28,15 @@ test('groupStoreKey', async function () {
     };
     const addOptions = getPostOptions(addBody, cookie);
     const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
-    // store key
-    const storeBody = {
-        accID: secondAccData.accID + '',
+    const added = await addResponse.json();
+    // kicked from group
+    const kickBody = {
         groupID: group.groupID,
-        groupKey, 
-        keyholder: secondAccData.accID + ''
+        accID: secondAccData.accID + ''
     };
-    const storeOptions = getPostOptions(storeBody, cookie);
-    const storeResponse = await nodeFetch(`${baseUrl()}/groupstorekey`, storeOptions);
-    const stored = await storeResponse.json();
+    const kickOptions = getPostOptions(kickBody, cookie);
+    const kickResponse = await nodeFetch(`${baseUrl()}/groupkickmember`, kickOptions);
+    const kicked = await kickResponse.json();
     
-    assert(stored.groupVersion, '1');
-    return assert(stored.valid);
+    return assert(kicked.valid);
 });

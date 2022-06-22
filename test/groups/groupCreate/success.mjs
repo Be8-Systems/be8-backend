@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import { baseUrl, newAccOptions, getPostOptions } from '../utils/utils.mjs';
-import randomString from '../utils/randomString.mjs';
+import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
 const accOptions = newAccOptions();
 
-test('groupCreate', async function () {
+test('SUCCESS groupCreate', async function () {
     const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     const groupBody = {
