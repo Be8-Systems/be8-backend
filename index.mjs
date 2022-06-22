@@ -81,16 +81,7 @@ app.use(session({
     }
 }));
 app.use(compression());
-app.use('/', Express.static('./frontend/login/'));
-app.use('/messenger', Express.static('./frontend/messenger/', {
-    setHeaders: (res, path, stat) => {
-        if (path.includes('/messenger/sw.js')) {
-            res.set('Service-Worker-Allowed', '/messenger/');
-        }
-    },
-  }));
-app.use('/stats', Express.static('./frontend/stats/'));
-app.use('/external', Express.static('./frontend/external/'));
+app.use('/', Express.static('./node_modules/be8-frontend/dist/prod'));
 
 newAccRoute(app);
 getThreadsRoute(app);
