@@ -20,19 +20,19 @@ test('SUCCESS getKey', async function () {
     const cookie = accResponse.headers.get('set-cookie');
     // setKey
     const setKeyBody = {
-        publicKey
+        publicKey,
     };
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
     const response = await nodeFetch(`${baseUrl()}/setkey`, setKeyOptions);
     // getKey
     const getKeyBody = {
-        accID: accData.accID + ''
+        accID: accData.accID + '',
     };
     const getKeyOptions = getPostOptions(getKeyBody, cookie);
     const getResponse = await nodeFetch(`${baseUrl()}/getkey`, getKeyOptions);
     const data = await getResponse.json();
     const fetchedKey = data.publicKey;
-    
+
     assert.strictEqual(typeof fetchedKey, 'object');
     assert.strictEqual(fetchedKey.crv, publicKey.crv);
     assert.strictEqual(fetchedKey.ext, publicKey.ext + '');

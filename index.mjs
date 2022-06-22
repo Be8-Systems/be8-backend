@@ -39,19 +39,21 @@ import pushnotifications from './lib/routes/utilities/pushnotifications.mjs';
 import insightsScheduler from './lib/util/insightsScheduler.mjs';
 
 const isTunnel = process.env.NODE_ENV === 'tunnel';
-const PORT = 3000; 
+const PORT = 3000;
 
-function startNgrok () {
-    return ngrok.connect({
-        authtoken: '1XvR9cNRX6yWAgzZl9fUOrB9fBd_5NYMs7AcDfcEyhZ5FmX6n',
-        proto: 'http',
-        addr: PORT,
-        subdomain: 'be8', 
-        region: 'eu',
-        binPath: path => path.replace('app.asar', 'app.asar.unpacked'),
-        onStatusChange: console.log,
-        onLogEvent: console.log,
-    }).then(console.log)
+function startNgrok() {
+    return ngrok
+        .connect({
+            authtoken: '1XvR9cNRX6yWAgzZl9fUOrB9fBd_5NYMs7AcDfcEyhZ5FmX6n',
+            proto: 'http',
+            addr: PORT,
+            subdomain: 'be8',
+            region: 'eu',
+            binPath: (path) => path.replace('app.asar', 'app.asar.unpacked'),
+            onStatusChange: console.log,
+            onLogEvent: console.log,
+        })
+        .then(console.log);
 }
 
 const app = Express();
@@ -61,25 +63,31 @@ const isProduction = process.env.NODE_ENV === 'production';
 app.disable('x-powered-by');
 
 app.use(cors());
-app.use(bodyParser.json({ 
-    limit: '5mb',
-    type: 'application/json'
-}));
-app.use(bodyParser.urlencoded({
-    limit: '5mb',
-    extended: true,
-    parameterLimit: 5
-}));
-app.use(session({
-    store: new redisStore({ client: redis, ttl: globals.expireTime }),
-    secret: globals.secret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: globals.expireTime,
-        secure: isProduction
-    }
-}));
+app.use(
+    bodyParser.json({
+        limit: '5mb',
+        type: 'application/json',
+    })
+);
+app.use(
+    bodyParser.urlencoded({
+        limit: '5mb',
+        extended: true,
+        parameterLimit: 5,
+    })
+);
+app.use(
+    session({
+        store: new redisStore({ client: redis, ttl: globals.expireTime }),
+        secret: globals.secret,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: globals.expireTime,
+            secure: isProduction,
+        },
+    })
+);
 app.use(compression());
 app.use('/', Express.static('./node_modules/be8-frontend/dist/'));
 app.use('/', Express.static('./node_modules/be8-frontend/dist/prod'));
@@ -118,7 +126,7 @@ if (isProduction) {
     startListenEncrypted(app);
 } else {
     app.listen(PORT, () => {});
-    
+
     if (isTunnel) {
         startNgrok();
     }

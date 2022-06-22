@@ -21,34 +21,44 @@ test('FAIL groupKickMember', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, adminCookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
     // add to group
     const addBody = {
         groupID: group.groupID,
-        memberID: secondAccData.accID + ''
+        memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, adminCookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(
+        `${baseUrl()}/groupaddmember`,
+        addOptions
+    );
     const added = await addResponse.json();
 
     // fail tests
-    const failBodies = [{
-        groupID: group.groupID,
-        accID: secondAccData.accID + '',
-        reason: 'NOTADMIN' // try to kick without being admin
-    }, {
-        groupID: 'g1234563545', // not existing group
-        accID: secondAccData.accID + '',
-        reason: 'GROUPNOTEXISTING'
-    }, {
-        groupID: group.groupID,
-        accID: firstAccData.accID + '', // circular
-        reason: 'CIRCULARKICK'
-    }];
+    const failBodies = [
+        {
+            groupID: group.groupID,
+            accID: secondAccData.accID + '',
+            reason: 'NOTADMIN', // try to kick without being admin
+        },
+        {
+            groupID: 'g1234563545', // not existing group
+            accID: secondAccData.accID + '',
+            reason: 'GROUPNOTEXISTING',
+        },
+        {
+            groupID: group.groupID,
+            accID: firstAccData.accID + '', // circular
+            reason: 'CIRCULARKICK',
+        },
+    ];
     const proms = failBodies.map(function (kickBody, i) {
         const cookie = i === 0 ? userCookie : adminCookie;
         const addMemberOptions = getPostOptions(kickBody, cookie);
@@ -56,10 +66,10 @@ test('FAIL groupKickMember', async function () {
         return nodeFetch(`${baseUrl()}/groupkickmember`, addMemberOptions);
     });
     const responses = await Promise.all(proms);
-    
+
     responses.forEach(async function (response, i) {
         const data = await response.json();
-        
+
         assert.strictEqual(data.reason, failBodies[i].reason);
         assert.notStrictEqual(data.valid, true);
     });

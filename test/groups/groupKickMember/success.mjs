@@ -16,27 +16,36 @@ test('SUCCESS groupKickMember', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
     // add to group
     const addBody = {
         groupID: group.groupID,
-        memberID: secondAccData.accID + ''
+        memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(
+        `${baseUrl()}/groupaddmember`,
+        addOptions
+    );
     const added = await addResponse.json();
     // kicked from group
     const kickBody = {
         groupID: group.groupID,
-        accID: secondAccData.accID + ''
+        accID: secondAccData.accID + '',
     };
     const kickOptions = getPostOptions(kickBody, cookie);
-    const kickResponse = await nodeFetch(`${baseUrl()}/groupkickmember`, kickOptions);
+    const kickResponse = await nodeFetch(
+        `${baseUrl()}/groupkickmember`,
+        kickOptions
+    );
     const kicked = await kickResponse.json();
-    
+
     return assert(kicked.valid);
 });

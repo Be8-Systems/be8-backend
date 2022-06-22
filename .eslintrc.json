@@ -5,11 +5,9 @@
         "node": true,
         "mocha": true,
         "mongo": true
-    },  
+    },
     "plugins": [],
-    "extends": [
-        "eslint:recommended"
-    ],
+    "extends": ["eslint:recommended", "prettier"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -19,28 +17,18 @@
         "sourceType": "module"
     },
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"]
     },
-    "overrides": [{
-        "files": ["./lib/**/*.mjs"],
-        "rules": {
-            "functional/no-conditional-statement": "off",
-            "functional/no-throw-statement": "off"
+    "overrides": [
+        {
+            "files": ["./lib/**/*.mjs"],
+            "rules": {
+                "functional/no-conditional-statement": "off",
+                "functional/no-throw-statement": "off"
+            }
         }
-    }]
+    ]
 }

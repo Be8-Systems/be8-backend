@@ -12,9 +12,11 @@ test('FAIL inviteLink', async function () {
     const cookie = accResponse.headers.get('set-cookie');
     const sentBody = { type: 'false', sentInviteLink: true }; //wrong type failing
     const sentOptions = getPostOptions(sentBody, cookie);
-    const sentResponse = await nodeFetch(`${baseUrl()}/invitelink`, sentOptions);
+    const sentResponse = await nodeFetch(
+        `${baseUrl()}/invitelink`,
+        sentOptions
+    );
     const sent = await sentResponse.json();
-    
+
     return assert.strictEqual(sent.error, 'INVALIDINPUT');
 });
-  

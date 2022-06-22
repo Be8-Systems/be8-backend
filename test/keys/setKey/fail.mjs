@@ -10,10 +10,10 @@ test('SUCCESS setKey', async function () {
     const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     // setKey
-    const setKeyBody = { };
+    const setKeyBody = {};
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
     const response = await nodeFetch(`${baseUrl()}/setkey`, setKeyOptions);
     const data = await response.json();
-    
+
     return assert(data.error, 'NOPUBLICKEY');
 });

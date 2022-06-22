@@ -22,27 +22,36 @@ test('FAIL groupGetMembers', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
     // add to group
     const addBody = {
         groupID: group.groupID,
-        memberID: secondAccData.accID + ''
+        memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(
+        `${baseUrl()}/groupaddmember`,
+        addOptions
+    );
     const added = await addResponse.json();
     // get members
     const membersBody = {
-        groupID: group.groupID
+        groupID: group.groupID,
     };
     const membersOptions = getPostOptions(membersBody, thirdAccCookie);
-    const membersResponse = await nodeFetch(`${baseUrl()}/groupgetmembers`, membersOptions);
+    const membersResponse = await nodeFetch(
+        `${baseUrl()}/groupgetmembers`,
+        membersOptions
+    );
     const failMembers = await membersResponse.json();
-    
+
     assert.strictEqual(failMembers.reason, 'NOGROUPMEMBER');
     return assert(!failMembers.valid);
 });

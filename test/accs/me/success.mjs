@@ -13,7 +13,7 @@ test('SUCCESS me', async function () {
     const meOptions = getGetOptions(cookie);
     const response = await nodeFetch(`${baseUrl()}/me`, meOptions);
     const data = await response.json();
-    
+
     assert.strictEqual(typeof data.accObj, 'object');
     assert.strictEqual(typeof data.accObj.nickname, 'string');
     assert.strictEqual(typeof data.accObj.type, 'string');

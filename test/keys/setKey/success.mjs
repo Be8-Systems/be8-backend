@@ -19,11 +19,11 @@ test('SUCCESS setKey', async function () {
     const cookie = accResponse.headers.get('set-cookie');
     // setKey
     const setKeyBody = {
-        publicKey
+        publicKey,
     };
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
     const response = await nodeFetch(`${baseUrl()}/setkey`, setKeyOptions);
     const data = await response.json();
-    
+
     return assert(data.valid);
 });

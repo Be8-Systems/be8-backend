@@ -16,24 +16,33 @@ test('SUCCESS groupGetCurrentVersion', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
     // add to group
     const addBody = {
         groupID: group.groupID,
-        memberID: secondAccData.accID + ''
+        memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(
+        `${baseUrl()}/groupaddmember`,
+        addOptions
+    );
     const added = await addResponse.json();
     // get current version
     const versionOptions = getPostOptions({ groupID: group.groupID }, cookie);
-    const currentVersionResponse = await nodeFetch(`${baseUrl()}/groupgetcurrentversion`, versionOptions);
+    const currentVersionResponse = await nodeFetch(
+        `${baseUrl()}/groupgetcurrentversion`,
+        versionOptions
+    );
     const currentVersion = await currentVersionResponse.json();
-    
+
     assert.strictEqual(typeof currentVersion.groupVersion, 'string');
     assert(!isNaN(currentVersion.groupVersion));
     return assert(currentVersion.valid);

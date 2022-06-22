@@ -6,19 +6,24 @@ import randomString from '../../utils/randomString.mjs';
 
 const nickname = randomString(10);
 const accOptions = newAccOptions(nickname);
-const failBodies = [{
-    oldNickname: nickname
-    // new nick missing
-}, {
-    oldNickname: nickname,
-    newNickname: '' // new nick too short (min length 1)
-}, {
-    oldNickname: nickname,
-    newNickname: randomString(21) // new nick too long (max length 20)
-}, {
-    oldNickname: nickname,
-    newNickname: 100 // new nick not a string
-}];
+const failBodies = [
+    {
+        oldNickname: nickname,
+        // new nick missing
+    },
+    {
+        oldNickname: nickname,
+        newNickname: '', // new nick too short (min length 1)
+    },
+    {
+        oldNickname: nickname,
+        newNickname: randomString(21), // new nick too long (max length 20)
+    },
+    {
+        oldNickname: nickname,
+        newNickname: 100, // new nick not a string
+    },
+];
 
 test('FAIL changeNickname', async function () {
     const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);

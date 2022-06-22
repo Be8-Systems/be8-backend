@@ -16,18 +16,27 @@ test('SUCCESS groupJoinMember', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
     // join group
     const joinBody = {
-        groupID: group.groupID
+        groupID: group.groupID,
     };
-    const joinOptions = getPostOptions(joinBody, secondAcc.headers.get('set-cookie'));
-    const joinResponse = await nodeFetch(`${baseUrl()}/groupjoinmember`, joinOptions);
+    const joinOptions = getPostOptions(
+        joinBody,
+        secondAcc.headers.get('set-cookie')
+    );
+    const joinResponse = await nodeFetch(
+        `${baseUrl()}/groupjoinmember`,
+        joinOptions
+    );
     const joined = await joinResponse.json();
-    
+
     return assert(joined.valid);
 });

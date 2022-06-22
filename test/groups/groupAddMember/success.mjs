@@ -16,20 +16,26 @@ test('SUCCESS groupAddMember', async function () {
     // create group
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
     // add to group
     const addBody = {
         groupID: group.groupID,
-        memberID: secondAccData.accID + ''
+        memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(
+        `${baseUrl()}/groupaddmember`,
+        addOptions
+    );
     const added = await addResponse.json();
-    
+
     assert(added.groupMembers.includes(secondAccData.accID + ''));
     return assert(added.valid);
 });

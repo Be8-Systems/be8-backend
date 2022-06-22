@@ -11,12 +11,15 @@ test('SUCCESS groupCreate', async function () {
     const cookie = accResponse.headers.get('set-cookie');
     const groupBody = {
         nickname: randomString(7),
-        groupType: 'public'
+        groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(
+        `${baseUrl()}/groupcreate`,
+        groupOptions
+    );
     const group = await groupResponse.json();
-    
+
     assert.strictEqual(typeof group.groupID, 'string');
     assert(group.groupID.includes('g'));
     return assert(group.valid);

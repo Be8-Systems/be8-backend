@@ -14,6 +14,6 @@ test('FAIL me', async function () {
     const meOptions = getGetOptions(cookie);
     const response = await nodeFetch(`${baseUrl()}/me`, meOptions);
     const data = await response.json();
-    
+
     return assert.strictEqual(data.error, 'NOTAUTH');
 });

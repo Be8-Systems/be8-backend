@@ -13,7 +13,7 @@ test('SUCCESS insights', async function () {
     const meOptions = getGetOptions(cookie);
     const response = await nodeFetch(`${baseUrl()}/insights`, meOptions);
     const insights = await response.json();
-    
+
     insights.insight.forEach(function (insight) {
         const parsedIns = parseInt(insight);
 
