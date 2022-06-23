@@ -101,7 +101,7 @@ fetch('/changenickname', {
 
 ### /destroyacc
 
-Deletes the acc of the actual session and all conversations of the acc. If acc is a group admin, the group will be deleted too.
+Deletes the acc of the actual session and all conversations of the acc. If the user is a group admin, the group will be deleted too.
 
 ```javascript
 fetch('/destroyacc', {
