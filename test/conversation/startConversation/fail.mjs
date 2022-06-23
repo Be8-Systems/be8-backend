@@ -23,10 +23,7 @@ test('FAIL startConversation', async function () {
     ];
     const proms = failBodies.map(function (convBody) {
         const startConversationOptions = getPostOptions(convBody, cookie);
-        return nodeFetch(
-            `${baseUrl()}/startconversation`,
-            startConversationOptions
-        );
+        return nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
     });
     const responses = await Promise.all(proms);
 

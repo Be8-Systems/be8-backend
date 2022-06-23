@@ -23,20 +23,14 @@ test('FAIL groupJoinMember maxReached', async function () {
         maxMembers: 2,
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // join group
     const joinBody = {
         groupID: group.groupID,
     };
     const joinOptions = getPostOptions(joinBody, secondAccCookie);
-    const joinResponse = await nodeFetch(
-        `${baseUrl()}/groupjoinmember`,
-        joinOptions
-    );
+    const joinResponse = await nodeFetch(`${baseUrl()}/groupjoinmember`, joinOptions);
     const joined = await joinResponse.json();
     // third acc is too much
     const joinThirdBody = {
@@ -44,10 +38,7 @@ test('FAIL groupJoinMember maxReached', async function () {
     };
 
     const joinThirdOptions = getPostOptions(joinThirdBody, thirdAccCookie);
-    const joinThirdResponse = await nodeFetch(
-        `${baseUrl()}/groupjoinmember`,
-        joinThirdOptions
-    );
+    const joinThirdResponse = await nodeFetch(`${baseUrl()}/groupjoinmember`, joinThirdOptions);
     const joinedThird = await joinThirdResponse.json();
 
     return assert.strictEqual(joinedThird.error, 'GROUPMAXREACHED');

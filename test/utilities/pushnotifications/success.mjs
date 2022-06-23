@@ -22,10 +22,7 @@ test('SUCCESS pushnotifications', async function () {
         },
     };
     const notificationOptions = getPostOptions(notificationBody, cookie);
-    const response = await nodeFetch(
-        `${baseUrl()}/subscribe`,
-        notificationOptions
-    );
+    const response = await nodeFetch(`${baseUrl()}/subscribe`, notificationOptions);
     const data = await response.json();
     const notifications = await redis.SMEMBERS(`devices:${accData.accID}`);
 

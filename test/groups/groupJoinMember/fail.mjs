@@ -20,20 +20,14 @@ test('FAIL groupJoinMember', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // join group
     const joinBody = {
         groupID: group.groupID,
     };
     const joinOptions = getPostOptions(joinBody, secondAccCookie);
-    const joinResponse = await nodeFetch(
-        `${baseUrl()}/groupjoinmember`,
-        joinOptions
-    );
+    const joinResponse = await nodeFetch(`${baseUrl()}/groupjoinmember`, joinOptions);
     // fail tests
     const failBodies = [
         {

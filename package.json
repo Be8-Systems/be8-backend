@@ -9,7 +9,7 @@
     },
     "scripts": {
         "start": "node index.mjs",
-        "test": "c8 node --test ./test/",
+        "test": "node --test ./test/",
         "lint": "npx eslint . --fix",
         "prettier": "prettier --write .",
         "markdown": "markdownlint --config ~/markdownlint.json README.md && markdown-toc -i README.md"

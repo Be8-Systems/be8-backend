@@ -49,7 +49,7 @@ function startNgrok() {
             addr: PORT,
             subdomain: 'be8',
             region: 'eu',
-            binPath: (path) => path.replace('app.asar', 'app.asar.unpacked'),
+            binPath: path => path.replace('app.asar', 'app.asar.unpacked'),
             onStatusChange: console.log,
             onLogEvent: console.log,
         })

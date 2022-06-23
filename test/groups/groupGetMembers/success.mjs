@@ -22,10 +22,7 @@ test('SUCCESS groupGetMembers', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -33,20 +30,14 @@ test('SUCCESS groupGetMembers', async function () {
         memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(
-        `${baseUrl()}/groupaddmember`,
-        addOptions
-    );
+    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     const added = await addResponse.json();
     // get members
     const membersBody = {
         groupID: group.groupID,
     };
     const membersOptions = getPostOptions(membersBody, cookie);
-    const membersResponse = await nodeFetch(
-        `${baseUrl()}/groupgetmembers`,
-        membersOptions
-    );
+    const membersResponse = await nodeFetch(`${baseUrl()}/groupgetmembers`, membersOptions);
     const members = await membersResponse.json();
     const member1 = members.members[0];
     const member2 = members.members[1];

@@ -18,10 +18,7 @@ test('SUCCESS getMessages', async function () {
     // start conversation
     const convBody = { receiverID: secondAccData.accID };
     const startConversationOptions = getPostOptions(convBody, cookie);
-    const convResponse = await nodeFetch(
-        `${baseUrl()}/startconversation`,
-        startConversationOptions
-    );
+    const convResponse = await nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
     // write message
     const writeBody = {
@@ -33,17 +30,11 @@ test('SUCCESS getMessages', async function () {
         type: 'textMessage',
     };
     const writeMessageOptions = getPostOptions(writeBody, cookie);
-    const writeResponse = await nodeFetch(
-        `${baseUrl()}/writemessage`,
-        writeMessageOptions
-    );
+    const writeResponse = await nodeFetch(`${baseUrl()}/writemessage`, writeMessageOptions);
     // get message
     const messagesBody = { threadID: conversation.threadID };
     const getMessagesOptions = getPostOptions(messagesBody, cookie);
-    const messagesResponse = await nodeFetch(
-        `${baseUrl()}/getmessages`,
-        getMessagesOptions
-    );
+    const messagesResponse = await nodeFetch(`${baseUrl()}/getmessages`, getMessagesOptions);
     const messages = await messagesResponse.json();
     const systemMessage = messages.messages[0];
     const firstMessage = messages.messages[1];

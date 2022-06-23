@@ -1,12 +1,7 @@
 import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
-import {
-    baseUrl,
-    newAccOptions,
-    getPostOptions,
-    getGetOptions,
-} from '../../utils/utils.mjs';
+import { baseUrl, newAccOptions, getPostOptions, getGetOptions } from '../../utils/utils.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
@@ -21,17 +16,11 @@ test('SUCCESS getThreads', async function () {
     // start conversation
     const convBody = { receiverID: secondAccData.accID };
     const startConversationOptions = getPostOptions(convBody, cookie);
-    const convResponse = await nodeFetch(
-        `${baseUrl()}/startconversation`,
-        startConversationOptions
-    );
+    const convResponse = await nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
     // get threads
     const getThreadsOptions = getGetOptions(cookie);
-    const threadsResponse = await nodeFetch(
-        `${baseUrl()}/getthreads`,
-        getThreadsOptions
-    );
+    const threadsResponse = await nodeFetch(`${baseUrl()}/getthreads`, getThreadsOptions);
     const threads = await threadsResponse.json();
     const systemThread = threads.threads[0];
     const firstConv = threads.threads[1];

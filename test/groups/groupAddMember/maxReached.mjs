@@ -23,10 +23,7 @@ test('FAIL groupAddMember maxReached', async function () {
         maxMembers: 2,
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -34,10 +31,7 @@ test('FAIL groupAddMember maxReached', async function () {
         memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(
-        `${baseUrl()}/groupaddmember`,
-        addOptions
-    );
+    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     const added = await addResponse.json();
     // third acc is too much
     const addThirdBody = {
@@ -46,10 +40,7 @@ test('FAIL groupAddMember maxReached', async function () {
     };
 
     const addThirdOptions = getPostOptions(addThirdBody, cookie);
-    const addThirdResponse = await nodeFetch(
-        `${baseUrl()}/groupaddmember`,
-        addThirdOptions
-    );
+    const addThirdResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addThirdOptions);
     const addedThird = await addThirdResponse.json();
 
     return assert.strictEqual(addedThird.error, 'GROUPMAXREACHED');

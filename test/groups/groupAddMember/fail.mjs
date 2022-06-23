@@ -23,10 +23,7 @@ test('FAIL groupAddMember', async function () {
         groupType: 'private',
     };
     const groupOptions = getPostOptions(groupBody, adminCookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {

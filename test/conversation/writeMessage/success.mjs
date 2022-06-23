@@ -18,10 +18,7 @@ test('SUCCESS writeMessage', async function () {
     // start conversation
     const convBody = { receiverID: secondAccData.accID };
     const startConversationOptions = getPostOptions(convBody, cookie);
-    const convResponse = await nodeFetch(
-        `${baseUrl()}/startconversation`,
-        startConversationOptions
-    );
+    const convResponse = await nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
     // write message
     const writeBody = {
@@ -33,10 +30,7 @@ test('SUCCESS writeMessage', async function () {
         type: 'textMessage',
     };
     const writeMessageOptions = getPostOptions(writeBody, cookie);
-    const writeResponse = await nodeFetch(
-        `${baseUrl()}/writemessage`,
-        writeMessageOptions
-    );
+    const writeResponse = await nodeFetch(`${baseUrl()}/writemessage`, writeMessageOptions);
     const write = await writeResponse.json();
     const messageID = `message:${conversation.threadID}:2`;
 

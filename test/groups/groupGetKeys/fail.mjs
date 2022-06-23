@@ -25,10 +25,7 @@ test('FAIL groupGetKeys', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -36,10 +33,7 @@ test('FAIL groupGetKeys', async function () {
         memberID: accID,
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(
-        `${baseUrl()}/groupaddmember`,
-        addOptions
-    );
+    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     // store key
     const storeBody = {
         accID,
@@ -48,10 +42,7 @@ test('FAIL groupGetKeys', async function () {
         keyholder: accID,
     };
     const storeOptions = getPostOptions(storeBody, cookie);
-    const storeResponse = await nodeFetch(
-        `${baseUrl()}/groupstorekey`,
-        storeOptions
-    );
+    const storeResponse = await nodeFetch(`${baseUrl()}/groupstorekey`, storeOptions);
     const stored = await storeResponse.json();
     // failing because non group member (third acc cookies) trying to get keys
     const keysBody = {
@@ -59,10 +50,7 @@ test('FAIL groupGetKeys', async function () {
         groupID: group.groupID,
     };
     const keysOptions = getPostOptions(keysBody, thirdCookie);
-    const keysResponse = await nodeFetch(
-        `${baseUrl()}/groupgetkeys`,
-        keysOptions
-    );
+    const keysResponse = await nodeFetch(`${baseUrl()}/groupgetkeys`, keysOptions);
     const keyRes = await keysResponse.json();
 
     assert.strictEqual(keyRes.reason, 'NOGROUPMEMBER');

@@ -16,10 +16,7 @@ test('SUCCESS inviteLink', async function (t) {
         const beforeRequest = await redis.get('sentInviteLinkAmmount');
         const sentBody = { type: 'join', sentInviteLink: true };
         const sentOptions = getPostOptions(sentBody, cookie);
-        const sentResponse = await nodeFetch(
-            `${baseUrl()}/invitelink`,
-            sentOptions
-        );
+        const sentResponse = await nodeFetch(`${baseUrl()}/invitelink`, sentOptions);
         const sent = await sentResponse.json();
         const afterRequest = await redis.get('sentInviteLinkAmmount');
         assert.strictEqual(parseInt(beforeRequest) + 1, parseInt(afterRequest));
@@ -30,10 +27,7 @@ test('SUCCESS inviteLink', async function (t) {
         const beforeRequest = await redis.get('usedInviteLinkAmmount');
         const usedBody = { type: 'join', usedInviteLink: true };
         const usedOptions = getPostOptions(usedBody, cookie);
-        const usedResponse = await nodeFetch(
-            `${baseUrl()}/invitelink`,
-            usedOptions
-        );
+        const usedResponse = await nodeFetch(`${baseUrl()}/invitelink`, usedOptions);
         const used = await usedResponse.json();
         const afterRequest = await redis.get('usedInviteLinkAmmount');
 

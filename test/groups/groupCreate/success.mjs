@@ -14,10 +14,7 @@ test('SUCCESS groupCreate', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
 
     assert.strictEqual(typeof group.groupID, 'string');

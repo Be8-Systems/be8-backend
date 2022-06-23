@@ -24,10 +24,7 @@ test('FAIL groupKickMember', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, adminCookie);
-    const groupResponse = await nodeFetch(
-        `${baseUrl()}/groupcreate`,
-        groupOptions
-    );
+    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -35,10 +32,7 @@ test('FAIL groupKickMember', async function () {
         memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, adminCookie);
-    const addResponse = await nodeFetch(
-        `${baseUrl()}/groupaddmember`,
-        addOptions
-    );
+    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
     const added = await addResponse.json();
 
     // fail tests

@@ -15,10 +15,7 @@ test('SUCCESS changeNickname', async function () {
         newNickname: randomString(9),
     };
     const changeNickOptions = getPostOptions(nickBody, cookie);
-    const response = await nodeFetch(
-        `${baseUrl()}/changenickname`,
-        changeNickOptions
-    );
+    const response = await nodeFetch(`${baseUrl()}/changenickname`, changeNickOptions);
     const data = await response.json();
 
     return assert(data.valid);

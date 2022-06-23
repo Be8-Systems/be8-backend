@@ -16,10 +16,7 @@ test('SUCCESS startConversation', async function () {
     // start conversation
     const convBody = { receiverID: secondAccData.accID };
     const startConversationOptions = getPostOptions(convBody, cookie);
-    const convResponse = await nodeFetch(
-        `${baseUrl()}/startconversation`,
-        startConversationOptions
-    );
+    const convResponse = await nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
     const checkThreadID = `${firstAccData.accID}:${secondAccData.accID}`;
 
