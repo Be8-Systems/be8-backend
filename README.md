@@ -128,13 +128,13 @@ fetch('/getthreads', {
 ```javascript
 [{
     // masterthread. Expire is set to future for sorting
-    expire: '2286-11-20T17:46:40.000Z'
-    nickname: 'be8'
-    sender: 's1' // system acc
-    status: 'read' // unread
-    text: 'ACCDELETED' // text of last message
-    threadID: '10326:s1'
-    ts: 'time of last message'
+    expire: '2286-11-20T17:46:40.000Z',
+    nickname: 'be8',
+    sender: 's1', // system acc
+    status: 'read', // unread
+    text: 'ACCDELETED', // text of last message
+    threadID: '10326:s1',
+    ts: 'time of last message',
     type: 'system' // user
 }, {
     ...
@@ -160,15 +160,15 @@ fetch('/getmessages', {
 
 ```javascript
 [{
-    messageID: '4'
-    nickname: 'fancy name'
-    receiver: '10317'
-    sender: '10281'
-    status: ['10317'] // ids that already have seen the messages
-    text: 'OrIXGw8CR6TYin5f2XNTuFpurMoPo7SgVtL3AKx' // text is always encrypted
-    threadID: '10281:10317'
-    ts: 'Wed Jun 22 2022 11:08:35 GMT+0000 (Coordinated Universal Time)'
-    type: 'textMessage' // system, imageMessage
+    messageID: '4',
+    nickname: 'fancy name',
+    receiver: '10317',
+    sender: '10281',
+    status: ['10317'], // ids that already have seen the messages
+    text: 'OrIXGw8CR6TYin5f2XNTuFpurMoPo7SgVtL3AKx', // text is always encrypted
+    threadID: '10281:10317',
+    ts: 'Wed Jun 22 2022 11:08:35 GMT+0000 (Coordinated Universal Time)',
+    type: 'textMessage', // system, imageMessage
 }, {
     ...
 }]
