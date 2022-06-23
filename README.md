@@ -20,6 +20,15 @@ Server for the be8 messenger.
 - [groups](#groups)
   * [/groupcreate](#groupcreate)
     + [group object](#group-object)
+  * [/groupaddmember](#groupaddmember)
+  * [/groupjoinmember](#groupjoinmember)
+  * [/groupgetmembers](#groupgetmembers)
+  * [/groupleavemember](#groupleavemember)
+  * [/groupkickmember](#groupkickmember)
+  * [/groupdestroygroup](#groupdestroygroup)
+  * [/groupstorekey](#groupstorekey)
+  * [/groupgetkeys](#groupgetkeys)
+  * [/groupgetcurrentversion](#groupgetcurrentversion)
 
 <!-- tocstop -->
 
@@ -138,15 +147,15 @@ fetch('/getmessages', {
 
 ```javascript
 [{
-    messageID: "4"
-    nickname: "fancy name"
-    receiver: "10317"
-    sender: "10281"
-    status: ["10317"] // ids that already have seen the messages
-    text: "OrIXGw8CR6TYin5f2XNTuFpurMoPo7SgVtL3AKx" // text is always encrypted
-    threadID: "10281:10317"
-    ts: "Wed Jun 22 2022 11:08:35 GMT+0000 (Coordinated Universal Time)"
-    type: "textMessage" // system, imageMessage
+    messageID: '4'
+    nickname: 'fancy name'
+    receiver: '10317'
+    sender: '10281'
+    status: ['10317'] // ids that already have seen the messages
+    text: 'OrIXGw8CR6TYin5f2XNTuFpurMoPo7SgVtL3AKx' // text is always encrypted
+    threadID: '10281:10317'
+    ts: 'Wed Jun 22 2022 11:08:35 GMT+0000 (Coordinated Universal Time)'
+    type: 'textMessage' // system, imageMessage
 }, {
     ...
 }]
@@ -173,12 +182,12 @@ When writing a message your conversation partner, or everyone in a group you are
 
 ```javascript
 const body = {
-    nickname: "fancy dude"
-    receiver: "10317"
-    sender: "10281"
-    text: "lbpyj3HzcX4v3WbNMka90X7XJRCmrw=="
-    threadID: "10281:10317"
-    type: "textMessage"
+    nickname: 'fancy dude'
+    receiver: '10317'
+    sender: '10281'
+    text: 'lbpyj3HzcX4v3WbNMka90X7XJRCmrw=='
+    threadID: '10281:10317'
+    type: 'textMessage'
 };
 
 fetch('/writemessage', {
@@ -219,4 +228,146 @@ fetch('/groupcreate', {
     admin: '10317', // creator
     maxMembers: 100,
 }
+```
+
+### /groupaddmember
+
+In a public group everyone can add another member unless the maxMembers are not reached. In a private group only the admin can add new members.
+
+```javascript
+const body = {
+    groupID: 'g1234',
+    memberID: '10281'
+};
+
+fetch('/groupaddmember', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupjoinmember
+
+Acc of actual session got added to a group by clicking the invite link. If no acc was created before one get's automatically created and added to the group.
+
+```javascript
+const body = {
+    groupID: 'g1234'
+};
+
+fetch('/groupjoinmember', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupgetmembers
+
+Returns all members and the admin always on first position.
+
+```javascript
+const body = {
+    groupID: 'g1234'
+};
+
+fetch('/groupgetmembers', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupleavemember
+
+If someone leaves the group a new groupkey is getting generated. If he rejoins the group he can see the old messages he saw before leaving but not the ones after leaving.
+
+```javascript
+const body = {
+    accID: '10281',
+    groupID: 'g1234'
+};
+
+fetch('/groupleavemember', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupkickmember
+
+Only the admin is able to kick a member of a group.
+
+```javascript
+const body = {
+    accID: '10281',
+    groupID: 'g1234'
+};
+
+fetch('/groupkickmember', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupdestroygroup
+
+When a group get's destroyed it's removed from every member's thread, so no one can read the messages anymore. Only the admin can destroy the group.
+
+```javascript
+const body = {
+    groupID: 'g1234'
+};
+
+fetch('/groupdestroygroup', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupstorekey
+
+Everytime a member leaves the group or is added a new group key is getting generated and stored encrypted for every member of the group. Also the groupVersion is increased and stored for every member that is still in the group.
+
+```javascript
+const body = {
+    groupID: 'g1234',
+    groupKey: 'encrypted group key',
+    accID: '10281',
+    keyholder: '10281'
+};
+
+fetch('/groupstorekey', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupgetkeys
+
+Only groupKeys are returned for the groupVersion that are stored for the particular acc.
+
+```javascript
+const body = {
+    groupID: 'g1234',
+    accID: '10281'
+};
+
+fetch('/groupgetkeys', {
+    method: 'POST',
+    body,
+});
+```
+
+### /groupgetcurrentversion
+
+When sending a message in a group the current group version is getting fetched for encrypting the message propperly.
+
+```javascript
+const body = {
+    groupID: 'g1234'
+};
+
+fetch('/groupgetcurrentversion', {
+    method: 'POST',
+    body,
+});
 ```
