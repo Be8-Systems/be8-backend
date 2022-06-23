@@ -1,16 +1,20 @@
 import randomString from './randomString.mjs';
+import CryptoJS from 'crypto-js';
 
 const port = 3000;
-
+// ToDo change me to static data
 export function baseUrl() {
     return `http://127.0.0.1:${port}`;
 }
 
 export function newAccOptions(nickname = false) {
+    const password = randomString(14);
+    const cipherPassword = CryptoJS.AES.encrypt(password, 'asdoij32423904ISASsdasd').toString();
+
     return {
         method: 'POST',
         body: JSON.stringify({
-            password: randomString(14),
+            password: cipherPassword,
             nickname: nickname || randomString(10),
         }),
         credentials: 'same-origin',

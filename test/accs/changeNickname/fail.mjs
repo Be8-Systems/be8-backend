@@ -1,5 +1,5 @@
 import test from 'node:test';
-import assert from 'assert/strict';
+import assert from 'node:assert/strict';
 import nodeFetch from 'node-fetch';
 import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
 import randomString from '../../utils/randomString.mjs';
@@ -9,33 +9,52 @@ const accOptions = newAccOptions(nickname);
 const failBodies = [
     {
         oldNickname: nickname,
-        // new nick missing
+        msg: 'newNickname parameter missing',
     },
     {
         oldNickname: nickname,
-        newNickname: '', // new nick too short (min length 1)
+        newNickname: '',
+        msg: 'newNickname too short (min length 1)',
     },
     {
         oldNickname: nickname,
-        newNickname: randomString(21), // new nick too long (max length 20)
+        newNickname: randomString(21),
+        msg: 'newNickname too long (max length 20)',
     },
     {
         oldNickname: nickname,
-        newNickname: 100, // new nick not a string
+        newNickname: 100,
+        msg: 'newNickname not a string',
+    },
+    {
+        oldNickname: nickname,
+        newNickname: [],
+        msg: 'newNickname not a string',
+    },
+    {
+        oldNickname: nickname,
+        newNickname: true,
+        msg: 'newNickname not a string',
+    },
+    {
+        oldNickname: nickname,
+        newNickname: {},
+        msg: 'newNickname not a string',
     },
 ];
 
-test('FAIL changeNickname', async function () {
+test('FAIL changeNickname', async function (context) {
     const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
-    const proms = failBodies.map(function (nickBody) {
-        const changeNickOptions = getPostOptions(nickBody, cookie);
-        return nodeFetch(`${baseUrl()}/changenickname`, changeNickOptions);
-    });
-    const responses = await Promise.all(proms);
+    const tests = await failBodies.map(async function (nickBody) {
+        await context.test(nickBody.msg, async () => {
+            const changeNickOptions = getPostOptions(nickBody, cookie);
+            const response = await nodeFetch(`${baseUrl()}/changenickname`, changeNickOptions);
+            const data = await response.json();
 
-    responses.forEach(async function (response) {
-        const data = await response.json();
-        assert.strictEqual(data.error, 'INVALIDNICKNAME');
+            return assert.strictEqual(data.error, 'INVALIDNICKNAME', nickBody.msg);
+        });
     });
+
+    await Promise.all(tests);
 });

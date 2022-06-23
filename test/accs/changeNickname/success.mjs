@@ -18,5 +18,7 @@ test('SUCCESS changeNickname', async function () {
     const response = await nodeFetch(`${baseUrl()}/changenickname`, changeNickOptions);
     const data = await response.json();
 
+    // ToDo: call /me
+
     return assert(data.valid);
 });

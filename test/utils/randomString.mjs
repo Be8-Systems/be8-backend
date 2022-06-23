@@ -1,4 +1,4 @@
-const charset = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
 export default function randomString(leng) {
