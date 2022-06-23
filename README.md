@@ -29,6 +29,19 @@ Server for the be8 messenger.
   * [/groupstorekey](#groupstorekey)
   * [/groupgetkeys](#groupgetkeys)
   * [/groupgetcurrentversion](#groupgetcurrentversion)
+  * [/grouptriggerseeupdate](#grouptriggerseeupdate)
+- [inviteLink](#invitelink)
+  * [/invitelink](#invitelink)
+- [keys](#keys)
+  * [/setkey](#setkey)
+  * [/getkey](#getkey)
+  * [/getkeys](#getkeys)
+- [media](#media)
+  * [/imageupload](#imageupload)
+  * [/imageget](#imageget)
+- [utilities](#utilities)
+  * [/insights](#insights)
+  * [/subscribe](#subscribe)
 
 <!-- tocstop -->
 
@@ -369,5 +382,177 @@ const body = {
 fetch('/groupgetcurrentversion', {
     method: 'POST',
     body,
+});
+```
+
+### /grouptriggerseeupdate
+
+Trigger server sent events for different types. At the moment just when someone joins a group.
+
+```javascript
+const body = {
+    groupID: 'g1234',
+    type: 'joinmember'
+};
+
+fetch('/grouptriggerseeupdate', {
+    method: 'POST',
+    body,
+});
+```
+
+## inviteLink
+
+### /invitelink
+
+Handles the counting of the generated and used invite links for users and groups.
+
+```javascript
+const body = {
+    sentInviteLink: true, // could also be usedInviteLink: true
+    type: 'join' // group
+};
+
+fetch('/invitelink', {
+    method: 'POST',
+    body
+});
+```
+
+## keys
+
+Handling of the public keys.
+
+### /setkey
+
+Sets the frontend generated public key for the acc of the actual session.
+
+```javascript
+const body = {
+    publicKey: {
+        crv: 'P-256',
+        ext: 'true',
+        key_ops: [],
+        kty: 'EC',
+        x: 'some part of key',
+        y: 'other part of key'
+    }
+};
+
+fetch('/setkey', {
+    method: 'POST',
+    body
+});
+```
+
+### /getkey
+
+Returns the public key for a given acc.
+
+```javascript
+const body = {
+    accID: '10281'
+};
+
+fetch('/getkey', {
+    method: 'POST',
+    body
+});
+```
+
+### /getkeys
+
+Returns the public keys for several given accs.
+
+```javascript
+const body = {
+    accIDs: ['10281', '10326']
+};
+
+fetch('/getkeys', {
+    method: 'POST',
+    body
+});
+```
+
+## media
+
+### /imageupload
+
+Writes the encrypted base64 file to a .bin file on the server storage. The name of the file is a mix of sender nickname and contentID.
+
+```javascript
+const body = {
+    content: 'some encrypted base64 string'
+    contentID: 'random String'
+    contentType: 'image'
+    nickname: 'name of the sender'
+    receiver: '10326'
+    sender: '10281'
+    threadID: '10281:10326'
+    type: 'imageMessage'
+};
+
+fetch('/imageupload', {
+    method: 'POST',
+    body
+});
+```
+
+### /imageget
+
+Returns the encrypted file with sender contentID and type of the content.
+
+```javascript
+const body = {
+    sender: '10281',
+    contentID: 'generated id at upload'
+};
+
+fetch('/imageget', {
+    method: 'POST',
+    body
+});
+```
+
+## utilities
+
+### /insights
+
+Returns some stats of the messenger.
+
+```javascript
+fetch('/insights', {
+    method: 'GET'
+});
+```
+
+Returns an array with numbers. Handled in frontend.
+
+```javascript
+[
+    '10327', // accs generated. Starts at 10000
+    '10023', // groups generated. Starts at 10000
+    '352', // threads
+    '4010', // messages
+    '160', // generated invite links
+    '53', // joined invite links
+    '38', // generated group invite links
+    '83', // used group invite links
+]
+```
+
+### /subscribe
+
+Adds the device keys to the db.
+
+```javascript
+const body = {
+    // the device keys
+};
+
+fetch('/imageget', {
+    method: 'POST',
+    body
 });
 ```
