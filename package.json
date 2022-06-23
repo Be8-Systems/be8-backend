@@ -11,7 +11,8 @@
         "start": "node index.mjs",
         "test": "c8 node --test ./test/",
         "lint": "npx eslint . --fix",
-        "prettier": "prettier --write ."
+        "prettier": "prettier --write .",
+        "markdown": "markdownlint --config ~/markdownlint.json README.md && markdown-toc -i README.md"
     },
     "dependencies": {
         "be8-frontend": "https://github.com/Be8-Systems/be8-frontend",

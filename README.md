@@ -2,21 +2,28 @@
 
 Server for the be8 messenger.
 
-# Routes
+<!-- toc -->
+
+- [accs](#accs)
+  * [/newacc](#newacc)
+    + [acc object](#acc-object)
+  * [/me](#me)
+  * [/changenickname](#changenickname)
+  * [/destroyacc](#destroyacc)
+- [conversations](#conversations)
+  * [/getthreads](#getthreads)
+    + [thread object](#thread-object)
+  * [/getmessages](#getmessages)
+    + [message object](#message-object)
+  * [/startconversation](#startconversation)
+  * [/writemessage](#writemessage)
+- [groups](#groups)
+  * [/groupcreate](#groupcreate)
+    + [group object](#group-object)
+
+<!-- tocstop -->
 
 ## accs
-
-Handling for the be8 acc object:
-
-```javascript
-{
-    nickname: 'picked name or randomly generated name',
-    password: 'randomly generated pw',
-    type: 'user',
-    expire: 'Date object', // acc expires after 30 days
-    id: 'generated acc id'
-}
-```
 
 ### /newacc
 
@@ -30,6 +37,18 @@ fetch('/newacc', {
     method: 'POST',
     body,
 });
+```
+
+#### acc object
+
+```javascript
+{
+    nickname: 'picked name or randomly generated name',
+    password: 'randomly generated pw',
+    type: 'user',
+    expire: 'Date object', // acc expires after 30 days
+    id: 'generated acc id'
+}
 ```
 
 ### /me
@@ -82,7 +101,7 @@ fetch('/getthreads', {
 });
 ```
 
-returns thread object:
+#### thread object
 
 ```javascript
 [{
@@ -115,7 +134,7 @@ fetch('/getmessages', {
 });
 ```
 
-returns message object:
+#### message object
 
 ```javascript
 [{
@@ -166,4 +185,38 @@ fetch('/writemessage', {
     method: 'POST',
     body
 });
+```
+
+## groups
+
+Handles all group activities incl. encrypted group keys.
+
+### /groupcreate
+
+The groupID is always a generated number with a leading 'g'. The creator is automatically the admin and gets a system message for creating the group. There are private and public groups.
+
+```javascript
+const body = {
+    groupType: 'public', // private
+    nickname: 'fancy groupname',
+    maxMembers: 100, // optional, default is set to 20
+};
+
+fetch('/groupcreate', {
+    method: 'POST',
+    body,
+});
+```
+
+#### group object
+
+```javascript
+{
+    groupID: 'g1234',
+    nickname: 'fancy groupname',
+    type: 'group',
+    groupType: 'public',
+    admin: '10317', // creator
+    maxMembers: 100,
+}
 ```
