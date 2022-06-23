@@ -29,7 +29,7 @@ Server for the be8 messenger.
   * [/groupstorekey](#groupstorekey)
   * [/groupgetkeys](#groupgetkeys)
   * [/groupgetcurrentversion](#groupgetcurrentversion)
-  * [/grouptriggerseeupdate](#grouptriggerseeupdate)
+  * [/grouptriggersseupdate](#grouptriggersseupdate)
 - [inviteLink](#invitelink)
   * [/invitelink](#invitelink)
 - [keys](#keys)
@@ -211,7 +211,7 @@ fetch('/writemessage', {
 
 ## groups
 
-Handles all group activities incl. encrypted group keys.
+Handles all group activities incl. encrypted group keys. //TODO: private public groups
 
 ### /groupcreate
 
@@ -261,7 +261,7 @@ fetch('/groupaddmember', {
 
 ### /groupjoinmember
 
-Acc of actual session got added to a group by clicking the invite link. If no acc was created before one get's automatically created and added to the group.
+Acc of actual session got added to a public group by clicking the invite link. If no acc was created before one get's automatically created and added to the group.
 
 ```javascript
 const body = {
@@ -307,7 +307,7 @@ fetch('/groupleavemember', {
 
 ### /groupkickmember
 
-Only the admin is able to kick a member of a group.
+Only the admin is able to kick a member of a group. The admin cannot kick himself.
 
 ```javascript
 const body = {
@@ -338,7 +338,7 @@ fetch('/groupdestroygroup', {
 
 ### /groupstorekey
 
-Everytime a member leaves the group or is added a new group key is getting generated and stored encrypted for every member of the group. Also the groupVersion is increased and stored for every member that is still in the group.
+Everytime a member leaves the group or is added, a new group key is getting generated and stored encrypted for every member of the group. Also the groupVersion is increased and stored for every member that is still in the group.
 
 ```javascript
 const body = {
@@ -356,7 +356,7 @@ fetch('/groupstorekey', {
 
 ### /groupgetkeys
 
-Only groupKeys are returned for the groupVersion that are stored for the particular acc.
+Only groupKeys are returned for the groupVersion that are stored for the particular acc. Only when the user is part of the group.
 
 ```javascript
 const body = {
@@ -372,7 +372,7 @@ fetch('/groupgetkeys', {
 
 ### /groupgetcurrentversion
 
-When sending a message in a group the current group version is getting fetched for encrypting the message propperly.
+When sending a message in a group the current group version is getting fetched for encrypting the message with the dedicated group key.
 
 ```javascript
 const body = {
@@ -385,7 +385,7 @@ fetch('/groupgetcurrentversion', {
 });
 ```
 
-### /grouptriggerseeupdate
+### /grouptriggersseupdate
 
 Trigger server sent events for different types. At the moment just when someone joins a group.
 
@@ -395,7 +395,7 @@ const body = {
     type: 'joinmember'
 };
 
-fetch('/grouptriggerseeupdate', {
+fetch('/grouptriggersseupdate', {
     method: 'POST',
     body,
 });
@@ -430,7 +430,7 @@ Sets the frontend generated public key for the acc of the actual session.
 ```javascript
 const body = {
     publicKey: {
-        crv: 'P-256',
+        crv: 'P-384',
         ext: 'true',
         key_ops: [],
         kty: 'EC',
@@ -483,13 +483,13 @@ Writes the encrypted base64 file to a .bin file on the server storage. The name 
 
 ```javascript
 const body = {
-    content: 'some encrypted base64 string'
-    contentID: 'random String'
-    contentType: 'image'
-    nickname: 'name of the sender'
-    receiver: '10326'
-    sender: '10281'
-    threadID: '10281:10326'
+    content: 'some encrypted base64 string',
+    contentID: 'random String',
+    contentType: 'image',
+    nickname: 'name of the sender',
+    receiver: '10326',
+    sender: '10281',
+    threadID: '10281:10326',
     type: 'imageMessage'
 };
 
@@ -544,14 +544,14 @@ Returns an array with numbers. Handled in frontend.
 
 ### /subscribe
 
-Adds the device keys to the db.
+Adds the device keys for pushnotifications to the db.
 
 ```javascript
 const body = {
     // the device keys
 };
 
-fetch('/imageget', {
+fetch('/subscribe', {
     method: 'POST',
     body
 });
