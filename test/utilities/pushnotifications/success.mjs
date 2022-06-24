@@ -9,7 +9,7 @@ const nickname = randomString(10);
 const accOptions = newAccOptions(nickname);
 
 test('SUCCESS pushnotifications', async function () {
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const accData = await accResponse.json();
     const cookie = accResponse.headers.get('set-cookie');
     const notificationBody = {
@@ -22,7 +22,7 @@ test('SUCCESS pushnotifications', async function () {
         },
     };
     const notificationOptions = getPostOptions(notificationBody, cookie);
-    const response = await nodeFetch(`${baseUrl()}/subscribe`, notificationOptions);
+    const response = await nodeFetch(`${baseUrl}/subscribe`, notificationOptions);
     const data = await response.json();
     const notifications = await redis.SMEMBERS(`devices:${accData.accID}`);
 

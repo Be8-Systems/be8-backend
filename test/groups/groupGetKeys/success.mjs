@@ -11,8 +11,8 @@ const groupKey =
 
 test('SUCCESS groupGetKeys', async function () {
     // create accs
-    const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
-    const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
+    const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
+    const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
     const secondAccData = await secondAcc.json();
     const accID = secondAccData.accID + '';
     const cookie = firstAcc.headers.get('set-cookie');
@@ -22,7 +22,7 @@ test('SUCCESS groupGetKeys', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -30,7 +30,7 @@ test('SUCCESS groupGetKeys', async function () {
         memberID: accID,
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
     // store key
     const storeBody = {
         accID,
@@ -39,7 +39,7 @@ test('SUCCESS groupGetKeys', async function () {
         keyholder: accID,
     };
     const storeOptions = getPostOptions(storeBody, cookie);
-    const storeResponse = await nodeFetch(`${baseUrl()}/groupstorekey`, storeOptions);
+    const storeResponse = await nodeFetch(`${baseUrl}/groupstorekey`, storeOptions);
     const stored = await storeResponse.json();
     // get keys
     const keysBody = {
@@ -47,7 +47,7 @@ test('SUCCESS groupGetKeys', async function () {
         groupID: group.groupID,
     };
     const keysOptions = getPostOptions(keysBody, cookie);
-    const keysResponse = await nodeFetch(`${baseUrl()}/groupgetkeys`, keysOptions);
+    const keysResponse = await nodeFetch(`${baseUrl}/groupgetkeys`, keysOptions);
     const keys = await keysResponse.json();
     const key = keys.groupKeys[0];
 

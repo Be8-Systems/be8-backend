@@ -15,14 +15,14 @@ const publicKey = {
 
 test('SUCCESS setKey', async function () {
     // new acc
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     // setKey
     const setKeyBody = {
         publicKey,
     };
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
-    const response = await nodeFetch(`${baseUrl()}/setkey`, setKeyOptions);
+    const response = await nodeFetch(`${baseUrl}/setkey`, setKeyOptions);
     const data = await response.json();
 
     return assert(data.valid);

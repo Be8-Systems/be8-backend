@@ -6,7 +6,7 @@ import randomString from '../utils/randomString.mjs';
 
 test('FAIL getMessages', async function (context) {
     const accOptions = newAccOptions();
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const acc = await accResponse.json();
     const validCookie = accResponse.headers.get('set-cookie');
     const groupBody = {
@@ -14,7 +14,7 @@ test('FAIL getMessages', async function (context) {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, validCookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     const invalidCookie = 'invalid';
     const body = {
@@ -24,27 +24,27 @@ test('FAIL getMessages', async function (context) {
     const postOptions = getPostOptions(body, invalidCookie);
     const getOptions = getGetOptions(invalidCookie);
     const routesWithAuth = [
-        [`${baseUrl()}/me`, getOptions],
-        [`${baseUrl()}/changenickname`, postOptions],
-        [`${baseUrl()}/getmessages`, postOptions],
-        [`${baseUrl()}/getthreads`, getOptions],
-        [`${baseUrl()}/startconversation`, postOptions],
-        [`${baseUrl()}/writemessage`, postOptions],
-        [`${baseUrl()}/groupaddmember`, postOptions],
-        [`${baseUrl()}/groupcreate`, postOptions],
-        [`${baseUrl()}/groupgetcurrentversion`, postOptions],
-        [`${baseUrl()}/groupgetkeys`, postOptions],
-        [`${baseUrl()}/groupgetmembers`, postOptions],
-        [`${baseUrl()}/groupjoinmember`, postOptions],
-        [`${baseUrl()}/groupkickmember`, postOptions],
-        [`${baseUrl()}/groupleavemember`, postOptions],
-        [`${baseUrl()}/groupstorekey`, postOptions],
-        [`${baseUrl()}/invitelink`, postOptions],
-        [`${baseUrl()}/getkey`, postOptions],
-        [`${baseUrl()}/getkeys`, postOptions],
-        [`${baseUrl()}/setkey`, postOptions],
-        [`${baseUrl()}/insights`, getOptions],
-        [`${baseUrl()}/subscribe`, postOptions]
+        [`${baseUrl}/me`, getOptions],
+        [`${baseUrl}/changenickname`, postOptions],
+        [`${baseUrl}/getmessages`, postOptions],
+        [`${baseUrl}/getthreads`, getOptions],
+        [`${baseUrl}/startconversation`, postOptions],
+        [`${baseUrl}/writemessage`, postOptions],
+        [`${baseUrl}/groupaddmember`, postOptions],
+        [`${baseUrl}/groupcreate`, postOptions],
+        [`${baseUrl}/groupgetcurrentversion`, postOptions],
+        [`${baseUrl}/groupgetkeys`, postOptions],
+        [`${baseUrl}/groupgetmembers`, postOptions],
+        [`${baseUrl}/groupjoinmember`, postOptions],
+        [`${baseUrl}/groupkickmember`, postOptions],
+        [`${baseUrl}/groupleavemember`, postOptions],
+        [`${baseUrl}/groupstorekey`, postOptions],
+        [`${baseUrl}/invitelink`, postOptions],
+        [`${baseUrl}/getkey`, postOptions],
+        [`${baseUrl}/getkeys`, postOptions],
+        [`${baseUrl}/setkey`, postOptions],
+        [`${baseUrl}/insights`, getOptions],
+        [`${baseUrl}/subscribe`, postOptions]
     ];
 
     const tests = await routesWithAuth.map(async function (options) {

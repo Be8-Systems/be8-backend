@@ -10,9 +10,9 @@ const thirdAccOptions = newAccOptions();
 
 test('FAIL groupKickMember', async function () {
     // create accs
-    const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
-    const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
-    const thirdAcc = await nodeFetch(`${baseUrl()}/newAcc`, thirdAccOptions);
+    const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
+    const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
+    const thirdAcc = await nodeFetch(`${baseUrl}/newAcc`, thirdAccOptions);
     const firstAccData = await firstAcc.json();
     const secondAccData = await secondAcc.json();
     const thirdAccData = await thirdAcc.json();
@@ -24,7 +24,7 @@ test('FAIL groupKickMember', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, adminCookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -32,7 +32,7 @@ test('FAIL groupKickMember', async function () {
         memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, adminCookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
     const added = await addResponse.json();
 
     // fail tests
@@ -57,7 +57,7 @@ test('FAIL groupKickMember', async function () {
         const cookie = i === 0 ? userCookie : adminCookie;
         const addMemberOptions = getPostOptions(kickBody, cookie);
 
-        return nodeFetch(`${baseUrl()}/groupkickmember`, addMemberOptions);
+        return nodeFetch(`${baseUrl}/groupkickmember`, addMemberOptions);
     });
     const responses = await Promise.all(proms);
 

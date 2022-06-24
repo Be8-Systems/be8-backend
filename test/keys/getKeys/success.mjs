@@ -15,7 +15,7 @@ const publicKeyToStore = {
 
 test('SUCCESS getKeys', async function () {
     // new acc
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const accData = await accResponse.json();
     const cookie = accResponse.headers.get('set-cookie');
     // setKey
@@ -23,14 +23,14 @@ test('SUCCESS getKeys', async function () {
         publicKey: publicKeyToStore,
     };
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
-    const response = await nodeFetch(`${baseUrl()}/setkey`, setKeyOptions);
+    const response = await nodeFetch(`${baseUrl}/setkey`, setKeyOptions);
     // getKey
     const accIDs = [accData.accID + ''];
     const getKeysBody = {
         accIDs,
     };
     const getKeysOptions = getPostOptions(getKeysBody, cookie);
-    const getResponse = await nodeFetch(`${baseUrl()}/getkeys`, getKeysOptions);
+    const getResponse = await nodeFetch(`${baseUrl}/getkeys`, getKeysOptions);
     const data = await getResponse.json();
 
     data.publicKeys.forEach(function ({ accID, publicKey }, i) {

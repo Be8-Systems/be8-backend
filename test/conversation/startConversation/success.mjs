@@ -8,15 +8,15 @@ const secondAccOptions = newAccOptions();
 
 test('SUCCESS startConversation', async function () {
     // create accs
-    const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
-    const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
+    const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
+    const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
     const firstAccData = await firstAcc.json();
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
     // start conversation
     const convBody = { receiverID: secondAccData.accID };
     const startConversationOptions = getPostOptions(convBody, cookie);
-    const convResponse = await nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
+    const convResponse = await nodeFetch(`${baseUrl}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
     const checkThreadID = `${firstAccData.accID}:${secondAccData.accID}`;
 

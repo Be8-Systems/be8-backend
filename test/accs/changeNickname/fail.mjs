@@ -44,12 +44,12 @@ const failBodies = [
 ];
 
 test('FAIL changeNickname', async function (context) {
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     const tests = await failBodies.map(async function (nickBody) {
         await context.test(nickBody.msg, async () => {
             const changeNickOptions = getPostOptions(nickBody, cookie);
-            const response = await nodeFetch(`${baseUrl()}/changenickname`, changeNickOptions);
+            const response = await nodeFetch(`${baseUrl}/changenickname`, changeNickOptions);
             const data = await response.json();
 
             return assert.strictEqual(data.error, 'INVALIDNICKNAME', nickBody.msg);

@@ -7,14 +7,14 @@ import randomString from '../../utils/randomString.mjs';
 const accOptions = newAccOptions();
 
 test('SUCCESS groupCreate', async function () {
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     const groupBody = {
         nickname: randomString(7),
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
 
     assert.strictEqual(typeof group.groupID, 'string');

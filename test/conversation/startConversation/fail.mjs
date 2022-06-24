@@ -7,7 +7,7 @@ const firstAccOptions = newAccOptions();
 
 test('FAIL startConversation', async function () {
     // create accs
-    const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
+    const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
     const firstAccData = await firstAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
     // start conversation
@@ -23,7 +23,7 @@ test('FAIL startConversation', async function () {
     ];
     const proms = failBodies.map(function (convBody) {
         const startConversationOptions = getPostOptions(convBody, cookie);
-        return nodeFetch(`${baseUrl()}/startconversation`, startConversationOptions);
+        return nodeFetch(`${baseUrl}/startconversation`, startConversationOptions);
     });
     const responses = await Promise.all(proms);
 

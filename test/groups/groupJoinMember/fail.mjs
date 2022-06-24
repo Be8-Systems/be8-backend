@@ -9,8 +9,8 @@ const secondAccOptions = newAccOptions();
 
 test('FAIL groupJoinMember', async function () {
     // create accs
-    const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
-    const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
+    const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
+    const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
     const secondAccCookie = secondAcc.headers.get('set-cookie');
@@ -20,14 +20,14 @@ test('FAIL groupJoinMember', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // join group
     const joinBody = {
         groupID: group.groupID,
     };
     const joinOptions = getPostOptions(joinBody, secondAccCookie);
-    const joinResponse = await nodeFetch(`${baseUrl()}/groupjoinmember`, joinOptions);
+    const joinResponse = await nodeFetch(`${baseUrl}/groupjoinmember`, joinOptions);
     // fail tests
     const failBodies = [
         {
@@ -43,7 +43,7 @@ test('FAIL groupJoinMember', async function () {
     ];
     const proms = failBodies.map(function (convBody) {
         const jooinMemberOptions = getPostOptions(convBody, secondAccCookie);
-        return nodeFetch(`${baseUrl()}/groupjoinmember`, jooinMemberOptions);
+        return nodeFetch(`${baseUrl}/groupjoinmember`, jooinMemberOptions);
     });
     const responses = await Promise.all(proms);
 

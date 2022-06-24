@@ -8,10 +8,10 @@ const nickname = randomString(10);
 const accOptions = newAccOptions(nickname);
 
 test('SUCCESS insights', async function () {
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     const meOptions = getGetOptions(cookie);
-    const response = await nodeFetch(`${baseUrl()}/insights`, meOptions);
+    const response = await nodeFetch(`${baseUrl}/insights`, meOptions);
     const insights = await response.json();
 
     insights.insight.forEach(function (insight) {

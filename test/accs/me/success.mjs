@@ -8,10 +8,10 @@ const nickname = randomString(10);
 const accOptions = newAccOptions(nickname);
 
 test('SUCCESS me', async function () {
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     const meOptions = getGetOptions(cookie);
-    const response = await nodeFetch(`${baseUrl()}/me`, meOptions);
+    const response = await nodeFetch(`${baseUrl}/me`, meOptions);
     const data = await response.json();
 
     assert.strictEqual(typeof data.accObj, 'object');

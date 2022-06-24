@@ -2,10 +2,11 @@ import randomString from './randomString.mjs';
 import CryptoJS from 'crypto-js';
 
 const port = 3000;
+const baseUrl = `http://127.0.0.1:${port}`;
 // ToDo change me to static data
-export function baseUrl() {
-    return `http://127.0.0.1:${port}`;
-}
+export {
+    baseUrl
+};
 
 export function newAccOptions(nickname = false) {
     const password = randomString(14);
@@ -42,5 +43,14 @@ export function getGetOptions(cookie) {
             'Content-Type': 'application/json',
             cookie,
         },
+    };
+}
+
+export function getOptionsWithoutCookie(body) {
+    return {
+        method: 'POST',
+        body: JSON.stringify(body),
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
     };
 }

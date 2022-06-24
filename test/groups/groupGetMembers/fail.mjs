@@ -12,12 +12,12 @@ const thirdAccOptions = newAccOptions();
 
 test('FAIL groupGetMembers', async function () {
     // create accs
-    const firstAcc = await nodeFetch(`${baseUrl()}/newAcc`, firstAccOptions);
-    const secondAcc = await nodeFetch(`${baseUrl()}/newAcc`, secondAccOptions);
+    const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
+    const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
     const firstAccData = await firstAcc.json();
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
-    const thirdAcc = await nodeFetch(`${baseUrl()}/newAcc`, thirdAccOptions);
+    const thirdAcc = await nodeFetch(`${baseUrl}/newAcc`, thirdAccOptions);
     const thirdAccCookie = thirdAcc.headers.get('set-cookie');
     // create group
     const groupBody = {
@@ -25,7 +25,7 @@ test('FAIL groupGetMembers', async function () {
         groupType: 'public',
     };
     const groupOptions = getPostOptions(groupBody, cookie);
-    const groupResponse = await nodeFetch(`${baseUrl()}/groupcreate`, groupOptions);
+    const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
     // add to group
     const addBody = {
@@ -33,14 +33,14 @@ test('FAIL groupGetMembers', async function () {
         memberID: secondAccData.accID + '',
     };
     const addOptions = getPostOptions(addBody, cookie);
-    const addResponse = await nodeFetch(`${baseUrl()}/groupaddmember`, addOptions);
+    const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
     const added = await addResponse.json();
     // get members
     const membersBody = {
         groupID: group.groupID,
     };
     const membersOptions = getPostOptions(membersBody, thirdAccCookie);
-    const membersResponse = await nodeFetch(`${baseUrl()}/groupgetmembers`, membersOptions);
+    const membersResponse = await nodeFetch(`${baseUrl}/groupgetmembers`, membersOptions);
     const failMembers = await membersResponse.json();
 
     assert.strictEqual(failMembers.reason, 'NOGROUPMEMBER');

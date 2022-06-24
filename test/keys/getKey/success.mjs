@@ -15,7 +15,7 @@ const publicKey = {
 
 test('SUCCESS getKey', async function () {
     // new acc
-    const accResponse = await nodeFetch(`${baseUrl()}/newAcc`, accOptions);
+    const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const accData = await accResponse.json();
     const cookie = accResponse.headers.get('set-cookie');
     // setKey
@@ -23,13 +23,13 @@ test('SUCCESS getKey', async function () {
         publicKey,
     };
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
-    const response = await nodeFetch(`${baseUrl()}/setkey`, setKeyOptions);
+    const response = await nodeFetch(`${baseUrl}/setkey`, setKeyOptions);
     // getKey
     const getKeyBody = {
         accID: accData.accID + '',
     };
     const getKeyOptions = getPostOptions(getKeyBody, cookie);
-    const getResponse = await nodeFetch(`${baseUrl()}/getkey`, getKeyOptions);
+    const getResponse = await nodeFetch(`${baseUrl}/getkey`, getKeyOptions);
     const data = await getResponse.json();
     const fetchedKey = data.publicKey;
 
