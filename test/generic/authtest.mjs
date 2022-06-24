@@ -10,14 +10,9 @@ const cookie = 'invalid';
 const postOptions = getPostOptions({}, cookie);
 const getOptions = getGetOptions(cookie);
 const routesWithAuth = [
-    [
-        `${baseUrl()}/getmessages`,
-        postOptions
-    ], [
-        `${baseUrl()}/me`,
-        getOptions
-    ]
-    // ToDo: add all routes 
+    [`${baseUrl()}/getmessages`, postOptions],
+    [`${baseUrl()}/me`, getOptions],
+    // ToDo: add all routes
 ];
 
 test('FAIL getMessages', async function (context) {

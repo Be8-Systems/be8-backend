@@ -115,7 +115,7 @@ Handles threads and messages.
 
 ### /getthreads
 
-Fetches all threads for the acc of the actual session and creates a master thread for system messages. A threadID is always a compound of the two conversation partners, e.g. 10281:10317, 10281:g123 (for groups).
+Fetches all threads for the acc of the actual session. A threadID is always a compound of the two conversation partners, e.g. 10281:10317, 10281:g123 (for groups).
 
 ```javascript
 fetch('/getthreads', {
@@ -127,15 +127,14 @@ fetch('/getthreads', {
 
 ```javascript
 [{
-    // masterthread. Expire is set to future for sorting
-    expire: '2286-11-20T17:46:40.000Z',
-    nickname: 'be8',
-    sender: 's1', // system acc
+    expire: 'some date',
+    nickname: 'nice nick',
+    sender: '10281', // system acc
     status: 'read', // unread
-    text: 'ACCDELETED', // text of last message
-    threadID: '10326:s1',
+    text: 'wkdjf48isjfdskjf92834ied', // text of last message encrypted
+    threadID: '10281:10326',
     ts: 'time of last message',
-    type: 'system' // user
+    type: 'user' // system
 }, {
     ...
 }]
@@ -164,7 +163,7 @@ fetch('/getmessages', {
     nickname: 'fancy name',
     receiver: '10317',
     sender: '10281',
-    status: ['10317'], // ids that already have seen the messages
+    status: ['10317'], // ids of accs that already have seen the messages
     text: 'OrIXGw8CR6TYin5f2XNTuFpurMoPo7SgVtL3AKx', // text is always encrypted
     threadID: '10281:10317',
     ts: 'Wed Jun 22 2022 11:08:35 GMT+0000 (Coordinated Universal Time)',
@@ -387,12 +386,12 @@ fetch('/groupgetcurrentversion', {
 
 ### /grouptriggersseupdate
 
-Trigger server sent events for different types. At the moment just when someone joins a group.
+Trigger server sent events for different types.
 
 ```javascript
 const body = {
     groupID: 'g1234',
-    type: 'joinmember'
+    type: 'joinmember' // 'leavegroup'
 };
 
 fetch('/grouptriggersseupdate', {
