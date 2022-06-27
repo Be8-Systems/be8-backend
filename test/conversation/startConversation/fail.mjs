@@ -5,30 +5,48 @@ import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
 
 const firstAccOptions = newAccOptions();
 
-test('FAIL startConversation', async function () {
+test('FAIL startConversation', async function (context) {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
     const firstAccData = await firstAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
-    // start conversation
     const failBodies = [
         {
-            receiverID: '113434543', // not existing accID
+            receiverID: '113434543',
             expected: 'ACCNOTEXISTS',
+            msg: 'Acc id is not existing.'
         },
         {
-            receiverID: firstAccData.accID + '', // own accID
+            receiverID: [],
+            expected: 'ACCNOTEXISTS',
+            msg: 'Acc id is not existing.'
+        },
+        {
+            receiverID: {},
+            expected: 'ACCNOTEXISTS',
+            msg: 'Acc id is not existing.'
+        },
+        {
+            receiverID: '',
+            expected: 'ACCNOTEXISTS',
+            msg: 'Acc id is not existing.'
+        },
+        {
+            receiverID: firstAccData.accID + '',
             expected: 'CIRCULARCONVERSATION',
+            msg: 'You cannot start a conversation with yourself.'
         },
     ];
-    const proms = failBodies.map(function (convBody) {
-        const startConversationOptions = getPostOptions(convBody, cookie);
-        return nodeFetch(`${baseUrl}/startconversation`, startConversationOptions);
-    });
-    const responses = await Promise.all(proms);
 
-    responses.forEach(async function (response, i) {
-        const data = await response.json();
-        assert.strictEqual(data.error, failBodies[i].expected);
+    const tests = await failBodies.map(async function (body) {
+        await context.test(body.msg, async () => {
+            const options = getPostOptions(body, cookie);
+            const response = await nodeFetch(`${baseUrl}/startconversation`, options);
+            const data = await response.json();
+            
+            return assert.strictEqual(data.error, body.expected);
+        });
     });
+
+    await Promise.all(tests);
 });
