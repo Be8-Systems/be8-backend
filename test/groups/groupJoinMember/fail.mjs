@@ -6,14 +6,16 @@ import randomString from '../../utils/randomString.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
+const thirdAccOptions = newAccOptions();
 
-test('FAIL groupJoinMember', async function () {
+test('FAIL groupJoinMember', async function (context) {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
-    const secondAccData = await secondAcc.json();
+    const thirdAcc = await nodeFetch(`${baseUrl}/newAcc`, thirdAccOptions);
     const cookie = firstAcc.headers.get('set-cookie');
-    const secondAccCookie = secondAcc.headers.get('set-cookie');
+    const alreadyJoinedCookie = secondAcc.headers.get('set-cookie');
+    const validCookie = thirdAcc.headers.get('set-cookie');
     // create group
     const groupBody = {
         nickname: randomString(7),
@@ -26,31 +28,62 @@ test('FAIL groupJoinMember', async function () {
     const joinBody = {
         groupID: group.groupID,
     };
-    const joinOptions = getPostOptions(joinBody, secondAccCookie);
+    const joinOptions = getPostOptions(joinBody, alreadyJoinedCookie);
     const joinResponse = await nodeFetch(`${baseUrl}/groupjoinmember`, joinOptions);
     // fail tests
     const failBodies = [
         {
             groupID: group.groupID,
-            memberID: secondAccData.accID + '', // already joined
-            reason: 'ISALREADYMEMBER',
+            alreadyJoinedCookie,
+            expected: 'ISALREADYMEMBER',
+            msg: 'this acc is already a member of the group'
         },
         {
-            groupID: 'g1234563545', // not existing group
-            memberID: secondAccData.accID + '',
-            reason: 'GROUPNOTEXISTING',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID parameter is missing'
+        },
+        {
+            groupID: 'g12345635454545',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not existing'
+        },
+        {
+            groupID: '',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not existing'
+        },
+        {
+            groupID: false,
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string'
+        },
+        {
+            groupID: [],
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string'
+        },
+        {
+            groupID: {},
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string'
+        },
+        {
+            groupID: 123,
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string'
         },
     ];
-    const proms = failBodies.map(function (convBody) {
-        const jooinMemberOptions = getPostOptions(convBody, secondAccCookie);
-        return nodeFetch(`${baseUrl}/groupjoinmember`, jooinMemberOptions);
+    const tests = await failBodies.map(async function (body) {
+        await context.test(body.msg, async () => {
+            const cookie = body.alreadyJoinedCookie || validCookie;
+            const options = getPostOptions(body, cookie);
+            const response = await nodeFetch(`${baseUrl}/groupjoinmember`, options);
+            const data = await response.json();
+            
+            assert(!data.valid);
+            return assert.strictEqual(data.reason, body.expected);
+        });
     });
-    const responses = await Promise.all(proms);
 
-    responses.forEach(async function (response, i) {
-        const data = await response.json();
-
-        assert.strictEqual(data.reason, failBodies[i].reason);
-        assert.notStrictEqual(data.valid, true);
-    });
+    await Promise.all(tests);
 });
