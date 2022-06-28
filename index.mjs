@@ -30,6 +30,10 @@ import groupKickMemberRoute from './lib/routes/groups/groupKickMember.mjs';
 import groupTriggerSSEUpdateRoute from './lib/routes/groups/groupTriggerSSEUpdate.mjs';
 import imageUploadRoute from './lib/routes/media/imageUpload.mjs';
 import imageGetRoute from './lib/routes/media/imageGet.mjs';
+import codeHas from './lib/routes/code/codeHas.mjs';
+import codeSet from './lib/routes/code/codeSet.mjs';
+import codeUnlock from './lib/routes/code/codeUnlock.mjs';
+import codeUpdate from './lib/routes/code/codeUpdate.mjs';
 import { eventSocket } from './lib/sockets/event.mjs';
 import startListenEncrypted from './lib/util/startListenEncrypted.mjs';
 import innerRedisStore from 'connect-redis6';
@@ -120,6 +124,10 @@ groupKickMemberRoute(app);
 groupTriggerSSEUpdateRoute(app);
 imageUploadRoute(app);
 imageGetRoute(app);
+codeHas(app);
+codeSet(app);
+codeUnlock(app);
+codeUpdate(app);
 insightsScheduler();
 
 if (isProduction) {
