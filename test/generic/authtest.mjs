@@ -48,7 +48,8 @@ test('FAIL getMessages', async function (context) {
         [`${baseUrl}/codehas`, getOptions],
         [`${baseUrl}/codeset`, postOptions],
         [`${baseUrl}/codeunlock`, postOptions],
-        [`${baseUrl}/codeupdate`, postOptions]
+        [`${baseUrl}/codeupdate`, postOptions],
+        [`${baseUrl}/endlessvalidate`, postOptions]
     ];
 
     const tests = await routesWithAuth.map(async function (options) {

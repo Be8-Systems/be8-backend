@@ -34,6 +34,7 @@ import codeHas from './lib/routes/code/codeHas.mjs';
 import codeSet from './lib/routes/code/codeSet.mjs';
 import codeUnlock from './lib/routes/code/codeUnlock.mjs';
 import codeUpdate from './lib/routes/code/codeUpdate.mjs';
+import endlessValidate from './lib/routes/token/endlessValidate.mjs';
 import { eventSocket } from './lib/sockets/event.mjs';
 import startListenEncrypted from './lib/util/startListenEncrypted.mjs';
 import innerRedisStore from 'connect-redis6';
@@ -128,6 +129,7 @@ codeHas(app);
 codeSet(app);
 codeUnlock(app);
 codeUpdate(app);
+endlessValidate(app);
 insightsScheduler();
 
 if (isProduction) {
