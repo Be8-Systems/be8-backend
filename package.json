@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Are you still using whatsapp?",
     "main": "index.mjs",
+    "type": "module",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Be8-Systems/be8-backend.git"
