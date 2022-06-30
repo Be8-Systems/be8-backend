@@ -17,7 +17,6 @@
         "build": "npm run prettier && npm run lint && npm run markdown"
     },
     "dependencies": {
-        "be8-frontend": "https://github.com/Be8-Systems/be8-frontend",
         "body-parser": "^1.19.0",
         "compression": "^1.7.4",
         "connect-redis6": "https://github.com/Be8-Systems/connect-redis6",
