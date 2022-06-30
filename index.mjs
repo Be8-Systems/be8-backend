@@ -43,13 +43,16 @@ import globals from './lib/data/globals.mjs';
 import redis from './lib/util/redis.mjs';
 import pushnotifications from './lib/routes/utilities/pushnotifications.mjs';
 import insightsScheduler from './lib/util/insightsScheduler.mjs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const isTunnel = process.env.NODE_ENV === 'tunnel';
 const args = process.argv.slice(2);
 const isFrontend = args.shift() === '--frontend';
-const distPath = isFrontend ? '../../dist/' : './node_modules/be8-frontend/dist/';
+const distPath = isFrontend ? `${__dirname}/../../dist` : './node_modules/be8-frontend/dist/';
 const PORT = 3000;
-
+console.log(distPath);
 function startNgrok() {
     return ngrok
         .connect({
