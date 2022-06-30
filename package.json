@@ -8,7 +8,7 @@
         "url": "git+https://github.com/Be8-Systems/be8-backend.git"
     },
     "scripts": {
-        "start": "node index.mjs",
+        "start": "node index.mjs --frontend",
         "test": "node --test ./test/",
         "lint": "npx eslint . --fix",
         "prettier": "prettier --write .",
