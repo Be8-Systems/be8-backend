@@ -45,6 +45,9 @@ import pushnotifications from './lib/routes/utilities/pushnotifications.mjs';
 import insightsScheduler from './lib/util/insightsScheduler.mjs';
 
 const isTunnel = process.env.NODE_ENV === 'tunnel';
+const args = process.argv.slice(2);
+const isFrontend = args.shift() === 'frontend';
+const distPath = isFrontend ? '../dist/' : './node_modules/be8-frontend/dist/';
 const PORT = 3000;
 
 function startNgrok() {
@@ -95,8 +98,8 @@ app.use(
     })
 );
 app.use(compression());
-app.use('/', Express.static('./node_modules/be8-frontend/dist/'));
-app.use('/', Express.static('./node_modules/be8-frontend/dist/prod'));
+app.use('/', Express.static(distPath));
+app.use('/', Express.static(`${distPath}prod`));
 
 newAccRoute(app);
 getThreadsRoute(app);
