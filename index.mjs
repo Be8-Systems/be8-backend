@@ -50,9 +50,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const isTunnel = process.env.NODE_ENV === 'tunnel';
 const args = process.argv.slice(2);
 const isFrontend = args.shift() === '--frontend';
-const distPath = isFrontend ? `${__dirname}/../../dist` : './node_modules/be8-frontend/dist/';
+const distPath = isFrontend ? `${__dirname}/../../dist/` : './node_modules/be8-frontend/dist/';
 const PORT = 3000;
-console.log(distPath);
+
 function startNgrok() {
     return ngrok
         .connect({
