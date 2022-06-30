@@ -4,23 +4,21 @@ import nodeFetch from 'node-fetch';
 import { baseUrl, newAccOptions, getPostOptions, getGetOptions } from '../../utils/utils.mjs';
 import randomString from '../../utils/randomString.mjs';
 
-const nickname = randomString(10);
-const accOptions = newAccOptions(nickname);
+const accOptions = newAccOptions();
 
-test('SUCCESS changeNickname', async function () {
+test('SUCCESS statusSet', async function () {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
-    const nickBody = {
-        oldNickname: nickname,
-        newNickname: randomString(9),
+    const statusBody = {
+        status: randomString(15)
     };
-    const changeNickOptions = getPostOptions(nickBody, cookie);
-    const response = await nodeFetch(`${baseUrl}/changenickname`, changeNickOptions);
+    const statusOptions = getPostOptions(statusBody, cookie);
+    const response = await nodeFetch(`${baseUrl}/statusset`, statusOptions);
     const data = await response.json();
     const meOptions = getGetOptions(cookie);
     const meResponse = await nodeFetch(`${baseUrl}/me`, meOptions);
     const me = await meResponse.json();
     
-    assert.strictEqual(me.accObj.nickname, nickBody.newNickname);
+    assert.strictEqual(me.accObj.status, statusBody.status);
     return assert(data.valid);
 });

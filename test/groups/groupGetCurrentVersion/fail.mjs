@@ -55,7 +55,7 @@ test('FAIL groupGetCurrentVersion', async function (context) {
         expected: 'GROUPNOTEXISTING',
         msg: 'group id not a string'
     }];
-    const tests = await failBodies.map(async function (body) {
+    const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const cookie = body.nonGroupCookie || validCookie;
             const options = getPostOptions(body, cookie);
