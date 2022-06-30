@@ -6,14 +6,16 @@ import randomString from '../../utils/randomString.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
+const thirdAccOptions = newAccOptions();
 
 test('FAIL groupLeaveMember', async function (context) {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
+    const thirdAcc = await nodeFetch(`${baseUrl}/newAcc`, thirdAccOptions);
     const secondAccData = await secondAcc.json();
     const validCookie = firstAcc.headers.get('set-cookie');
-    const nonGroupCookie = secondAcc.headers.get('set-cookie');
+    const nonGroupCookie = thirdAcc.headers.get('set-cookie');
     // create group
     const groupBody = {
         nickname: randomString(7),
