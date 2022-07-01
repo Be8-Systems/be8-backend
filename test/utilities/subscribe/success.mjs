@@ -8,7 +8,7 @@ import redis from '../../../lib/util/redis.mjs';
 const nickname = randomString(10);
 const accOptions = newAccOptions(nickname);
 
-test('SUCCESS pushnotifications', async function () {
+test('SUCCESS subscribe', async function () {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const accData = await accResponse.json();
     const cookie = accResponse.headers.get('set-cookie');

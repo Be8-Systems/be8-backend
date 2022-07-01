@@ -41,7 +41,7 @@ import startListenEncrypted from './lib/util/startListenEncrypted.mjs';
 import innerRedisStore from 'connect-redis6';
 import globals from './lib/data/globals.mjs';
 import redis from './lib/util/redis.mjs';
-import pushnotifications from './lib/routes/utilities/pushnotifications.mjs';
+import subscribe from './lib/routes/utilities/subscribe.mjs';
 import insightsScheduler from './lib/util/insightsScheduler.mjs';
 
 const isTunnel = process.env.NODE_ENV === 'tunnel';
@@ -116,7 +116,7 @@ getKeyRoute(app);
 getKeysRoute(app);
 changeNicknameRoute(app);
 statusSet(app);
-pushnotifications(app);
+subscribe(app);
 groupJoinMember(app);
 groupLeaveMember(app);
 groupCreateRoute(app);
