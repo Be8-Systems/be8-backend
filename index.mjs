@@ -49,6 +49,9 @@ const args = process.argv.slice(2);
 const isFrontend = args.shift() === '--frontend';
 const distPath = isFrontend ? './dist/' : './node_modules/be8-frontend/dist/';
 const PORT = 3000;
+const app = Express();
+const redisStore = innerRedisStore(session);
+const isProduction = process.env.NODE_ENV === 'production';
 
 function startNgrok() {
     return ngrok
@@ -65,12 +68,7 @@ function startNgrok() {
         .then(console.log);
 }
 
-const app = Express();
-const redisStore = innerRedisStore(session);
-const isProduction = process.env.NODE_ENV === 'production';
-
 app.disable('x-powered-by');
-
 app.use(cors());
 app.use(
     bodyParser.json({
