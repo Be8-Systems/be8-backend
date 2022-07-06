@@ -16,9 +16,9 @@ export function newAccOptions(nickname = false) {
     return {
         method: 'POST',
         body: JSON.stringify({
-            password: cipherPassword,
+            password: 'U2FsdGVkX19fIs07t/DUfTAkWvalf6lI0Xg5kZ5cCii84zSeQfIlQ21WjFBYZVIzBqcelpRk+zqoa9wXxNr07g==',
             nickname: nickname || randomString(10),
-            salt
+            salt: '1657105032826'
         }),
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
