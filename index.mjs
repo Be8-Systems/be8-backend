@@ -47,7 +47,6 @@ import insightsScheduler from './lib/util/insightsScheduler.mjs';
 const isTunnel = process.env.NODE_ENV === 'tunnel';
 const args = process.argv.slice(2);
 const isFrontend = args.shift() === '--frontend';
-const distPath = isFrontend ? './dist/' : './node_modules/be8-frontend/dist/';
 const PORT = 3000;
 const app = Express();
 const redisStore = innerRedisStore(session);
@@ -68,79 +67,81 @@ function startNgrok() {
         .then(console.log);
 }
 
-app.disable('x-powered-by');
-app.use(cors());
-app.use(
-    bodyParser.json({
-        limit: '5mb',
-        type: 'application/json',
-    })
-);
-app.use(
-    bodyParser.urlencoded({
-        limit: '5mb',
-        extended: true,
-        parameterLimit: 5,
-    })
-);
-app.use(
-    session({
-        store: new redisStore({ client: redis, ttl: globals.expireTime }),
-        secret: globals.secret,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            maxAge: globals.expireTime,
-            secure: isProduction,
-        },
-    })
-);
-app.use(compression());
-app.use('/', Express.static(distPath));
-app.use('/', Express.static(`${distPath}prod`));
-
-newAccRoute(app);
-getThreadsRoute(app);
-meRoute(app);
-startConversationRoute(app);
-insightsRoute(app);
-inviteLinkRoute(app);
-getMessagesRoute(app);
-writeMessageRoute(app);
-eventSocket(app);
-destroyAccRoute(app);
-setKeyRoute(app);
-getKeyRoute(app);
-getKeysRoute(app);
-changeNicknameRoute(app);
-statusSet(app);
-subscribe(app);
-groupJoinMember(app);
-groupLeaveMember(app);
-groupCreateRoute(app);
-groupAddMemberRoute(app);
-groupGetMembersRoute(app);
-groupStoreKeyRoute(app);
-groupGetKeysRoute(app);
-groupGetCurrentVersionRoute(app);
-groupDestroyGroupRoute(app);
-groupKickMemberRoute(app);
-groupTriggerSSEUpdateRoute(app);
-imageUploadRoute(app);
-imageGetRoute(app);
-codeHas(app);
-codeSet(app);
-codeUnlock(app);
-codeUpdate(app);
-endlessValidate(app);
-insightsScheduler();
-
-if (isProduction) {
-    startListenEncrypted(app);
-} else {
-    app.listen(PORT, () => {});
-
-    if (isTunnel) {
-        startNgrok();
-    }
+export default function start (path = './node_modules/be8-frontend/dist/') {
+    app.disable('x-powered-by');
+    app.use(cors());
+    app.use(
+        bodyParser.json({
+            limit: '5mb',
+            type: 'application/json',
+        })
+    );
+    app.use(
+        bodyParser.urlencoded({
+            limit: '5mb',
+            extended: true,
+            parameterLimit: 5,
+        })
+    );
+    app.use(
+        session({
+            store: new redisStore({ client: redis, ttl: globals.expireTime }),
+            secret: globals.secret,
+            resave: false,
+            saveUninitialized: true,
+            cookie: {
+                maxAge: globals.expireTime,
+                secure: isProduction,
+            },
+        })
+    );
+    app.use(compression());
+    app.use('/', Express.static(path));
+    app.use('/', Express.static(`${path}prod`));
+    
+    newAccRoute(app);
+    getThreadsRoute(app);
+    meRoute(app);
+    startConversationRoute(app);
+    insightsRoute(app);
+    inviteLinkRoute(app);
+    getMessagesRoute(app);
+    writeMessageRoute(app);
+    eventSocket(app);
+    destroyAccRoute(app);
+    setKeyRoute(app);
+    getKeyRoute(app);
+    getKeysRoute(app);
+    changeNicknameRoute(app);
+    statusSet(app);
+    subscribe(app);
+    groupJoinMember(app);
+    groupLeaveMember(app);
+    groupCreateRoute(app);
+    groupAddMemberRoute(app);
+    groupGetMembersRoute(app);
+    groupStoreKeyRoute(app);
+    groupGetKeysRoute(app);
+    groupGetCurrentVersionRoute(app);
+    groupDestroyGroupRoute(app);
+    groupKickMemberRoute(app);
+    groupTriggerSSEUpdateRoute(app);
+    imageUploadRoute(app);
+    imageGetRoute(app);
+    codeHas(app);
+    codeSet(app);
+    codeUnlock(app);
+    codeUpdate(app);
+    endlessValidate(app);
+    insightsScheduler();
+    
+    if (isProduction) {
+        startListenEncrypted(app);
+    } else {
+        app.listen(PORT, () => {});
+    
+        if (isTunnel) {
+            startNgrok();
+        }
+    }    
 }
