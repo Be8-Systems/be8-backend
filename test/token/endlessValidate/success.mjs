@@ -6,7 +6,7 @@ import randomString from '../../utils/randomString.mjs';
 import redis from '../../../lib/util/redis.mjs';
 
 const accOptions = newAccOptions();
-const token = randomString(20);
+const token = randomString(32);
 const hundredYears = 3153600000; // in seconds
 
 test('SUCCESS endlessValidate', async function () {

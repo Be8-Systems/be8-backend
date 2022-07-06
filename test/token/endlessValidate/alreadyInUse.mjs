@@ -6,7 +6,7 @@ import randomString from '../../utils/randomString.mjs';
 import redis from '../../../lib/util/redis.mjs';
 
 const accOptions = newAccOptions();
-const token = randomString(20);
+const token = randomString(32);
 
 test('SUCCESS token already in use', async function () {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);

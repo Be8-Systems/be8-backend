@@ -5,7 +5,7 @@ import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
 import randomString from '../../utils/randomString.mjs';
 
 const accOptions = newAccOptions();
-const token = randomString(20);
+const token = randomString(32);
 
 test('SUCCESS token not existing', async function () {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
