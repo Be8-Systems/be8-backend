@@ -10,13 +10,15 @@ export {
 
 export function newAccOptions(nickname = false) {
     const password = randomString(14);
-    const cipherPassword = CryptoJS.AES.encrypt(password, 'asdoij32423904ISASsdasd').toString();
+    const salt = Date.now() + '';
+    const cipherPassword = CryptoJS.AES.encrypt(password, salt).toString();
 
     return {
         method: 'POST',
         body: JSON.stringify({
             password: cipherPassword,
             nickname: nickname || randomString(10),
+            salt
         }),
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
