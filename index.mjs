@@ -90,7 +90,7 @@ export default function start (path = './node_modules/be8-frontend/dist/') {
             resave: false,
             saveUninitialized: true,
             cookie: {
-                maxAge: globals.expireTime,
+                maxAge: globals.hundredYears,
                 secure: isProduction,
             },
         })
