@@ -85,7 +85,7 @@ export default function start (path = './node_modules/be8-frontend/dist/') {
     );
     app.use(
         session({
-            store: new redisStore({ client: redis, ttl: globals.expireTime }),
+            store: new redisStore({ client: redis, disableTTL: true }),
             secret: globals.secret,
             resave: false,
             saveUninitialized: true,
