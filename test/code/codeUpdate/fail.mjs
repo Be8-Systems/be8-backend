@@ -127,6 +127,18 @@ test('FAIL update code', async function (context) {
         oldCode: 1234,
         expected: 'INVALIDOLDCODE',
         msg: 'oldCode parameter is not a string'
+    }, {
+        code: randomString(9),
+        codeType: 'unlock',
+        oldCode: 'wrong code',
+        expected: 'OLDCODEWRONG',
+        msg: 'oldCode is the wrong code'
+    }, {
+        code: randomString(9),
+        codeType: 'destroy',
+        oldCode: 'wrong code',
+        expected: 'OLDCODEWRONG',
+        msg: 'oldCode is the wrong code'
     }];
     const tests = await failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
