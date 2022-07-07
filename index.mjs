@@ -91,6 +91,7 @@ export default function start (path = './node_modules/be8-frontend/dist/') {
             saveUninitialized: true,
             cookie: {
                 maxAge: globals.hundredYears,
+                expires: new Date(Date.now + globals.hundredYears),
                 secure: isProduction,
             },
         })
