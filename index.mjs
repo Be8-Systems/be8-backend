@@ -97,8 +97,8 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
         })
     );
     app.use(compression());
-    app.use('/', Express.static(path));
-    app.use('/', Express.static(`${path}prod`));
+    app.use('/', Express.static(staticFiles));
+    app.use('/', Express.static(`${staticFiles}prod`));
     
     newAccRoute(app);
     getThreadsRoute(app);
