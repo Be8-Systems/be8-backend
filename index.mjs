@@ -67,7 +67,7 @@ function startNgrok() {
         .then(console.log);
 }
 
-export default function start (path = './node_modules/be8-frontend/dist/') {
+export default function start ({ fakeTokens = [], staticFiles = './node_modules/be8-frontend/dist/' }) {
     app.disable('x-powered-by');
     app.use(cors());
     app.use(
@@ -136,6 +136,11 @@ export default function start (path = './node_modules/be8-frontend/dist/') {
     endlessValidate(app);
     insightsScheduler();
     
+    if (fakeTokens.length > 0) {
+        const proms = fakeTokens.map(token => redis.hSet(`token:${token}`, { active: false, type: 'endless' }));
+
+        Promise.all(proms).then(() => {});
+    }
     if (isProduction) {
         startListenEncrypted(app);
     } else {
