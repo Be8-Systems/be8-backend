@@ -12,7 +12,7 @@ test('SUCCESS token already in use', async function () {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const accData = await accResponse.json();
     const cookie = accResponse.headers.get('set-cookie');
-    await redis.set(`token:${token}`, 'false');
+    await redis.hSet(`token:${token}`, { active: false, type: 'endless' });
     const codeBody = {
         unlockCode: randomString(9),
         destroyCode: randomString(9),
