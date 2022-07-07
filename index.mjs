@@ -139,7 +139,7 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
     if (fakeTokens.length > 0) {
         const proms = fakeTokens.map(function ({ token, type, validTime }) {
             const basic = { active: false, type };
-            const options = token.validTime ? { ...basic, validTime } : basic;
+            const options = validTime ? { ...basic, validTime } : basic;
 
             redis.hSet(`token:${token}`, options);
         });
