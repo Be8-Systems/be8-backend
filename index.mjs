@@ -137,7 +137,12 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
     insightsScheduler();
     
     if (fakeTokens.length > 0) {
-        const proms = fakeTokens.map(token => redis.hSet(`token:${token}`, { active: false, type: 'endless' }));
+        const proms = fakeTokens.map(function ({ token, type, validTime }) {
+            const basic = { active: false, type };
+            const options = token.promo ? { ...basic, validTime } : basic;
+
+            redis.hSet(`token:${token}`, options);
+        });
 
         Promise.all(proms).then(() => {});
     }
