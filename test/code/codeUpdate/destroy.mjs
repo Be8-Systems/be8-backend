@@ -19,6 +19,7 @@ test('SUCCESS update destroyCode', async function () {
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const updateBody = {
         code: randomString(10),
+        oldCode: codeBody.destroyCode,
         codeType: 'destroy'
     };
     const updateOptions = getPostOptions(updateBody, cookie);

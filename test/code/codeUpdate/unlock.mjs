@@ -19,6 +19,7 @@ test('SUCCESS update unlockCode', async function () {
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const updateBody = {
         code: randomString(10),
+        oldCode: codeBody.unlockCode,
         codeType: 'unlock'
     };
     const updateOptions = getPostOptions(updateBody, cookie);
