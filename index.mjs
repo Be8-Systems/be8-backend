@@ -25,6 +25,7 @@ import groupAddMemberRoute from './lib/routes/groups/groupAddMember.mjs';
 import groupGetMembersRoute from './lib/routes/groups/groupGetMembers.mjs';
 import groupStoreKeyRoute from './lib/routes/groups/groupStoreKey.mjs';
 import groupGetKeysRoute from './lib/routes/groups/groupGetKeys.mjs';
+import groupIncreaseVersion from './lib/routes/groups/groupIncreaseVersion.mjs';
 import groupGetCurrentVersionRoute from './lib/routes/groups/groupGetCurrentVersion.mjs';
 import groupDestroyGroupRoute from './lib/routes/groups/groupDestroyGroup.mjs';
 import groupKickMemberRoute from './lib/routes/groups/groupKickMember.mjs';
@@ -123,6 +124,7 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
     groupGetMembersRoute(app);
     groupStoreKeyRoute(app);
     groupGetKeysRoute(app);
+    groupIncreaseVersion(app);
     groupGetCurrentVersionRoute(app);
     groupDestroyGroupRoute(app);
     groupKickMemberRoute(app);
