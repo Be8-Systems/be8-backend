@@ -16,7 +16,7 @@ test('SUCCESS codeDestroy', async function () {
     const codeSetOptions = getPostOptions(codeBody, cookie);
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const unlockBody = {
-        code: codeBody.destroyCode
+        code: codeBody.destroyCode,
     };
     const unlockOptions = getPostOptions(unlockBody, cookie);
     const response = await nodeFetch(`${baseUrl}/codeunlock`, unlockOptions);
@@ -24,7 +24,7 @@ test('SUCCESS codeDestroy', async function () {
     const meOptions = getGetOptions(cookie);
     const meResponse = await nodeFetch(`${baseUrl}/me`, meOptions);
     const me = await meResponse.json();
-    
+
     assert.strictEqual(me.error, 'NOTAUTH');
     assert(data.isDestroyCode);
     return assert(data.valid);

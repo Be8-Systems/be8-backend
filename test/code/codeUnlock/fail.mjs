@@ -15,36 +15,43 @@ test('FAIL codeUnlock', async function (context) {
     };
     const codeSetOptions = getPostOptions(codeBody, cookie);
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
-    const failBodies = [{
-        expected: 'INVALIDCODE',
-        msg: 'code parameter is missing'
-    }, {
-        code: '',
-        expected: 'INVALIDCODE',
-        msg: 'code is too short'
-    }, {
-        code: null,
-        expected: 'INVALIDCODE',
-        msg: 'code is not a string'
-    }, {
-        code: [],
-        expected: 'INVALIDCODE',
-        msg: 'code is not a string'
-    }, {
-        code: {},
-        expected: 'INVALIDCODE',
-        msg: 'code is not a string'
-    }, {
-        code: 1234,
-        expected: 'INVALIDCODE',
-        msg: 'code is not a string'
-    }];
+    const failBodies = [
+        {
+            expected: 'INVALIDCODE',
+            msg: 'code parameter is missing',
+        },
+        {
+            code: '',
+            expected: 'INVALIDCODE',
+            msg: 'code is too short',
+        },
+        {
+            code: null,
+            expected: 'INVALIDCODE',
+            msg: 'code is not a string',
+        },
+        {
+            code: [],
+            expected: 'INVALIDCODE',
+            msg: 'code is not a string',
+        },
+        {
+            code: {},
+            expected: 'INVALIDCODE',
+            msg: 'code is not a string',
+        },
+        {
+            code: 1234,
+            expected: 'INVALIDCODE',
+            msg: 'code is not a string',
+        },
+    ];
     const tests = await failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/codeunlock`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

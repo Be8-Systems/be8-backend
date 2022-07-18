@@ -41,91 +41,91 @@ test('FAIL groupKickMember', async function (context) {
             accID: secondAccData.accID + '',
             userCookie,
             expected: 'NOTADMIN',
-            msg: 'trying to kick without being the admin'
+            msg: 'trying to kick without being the admin',
         },
         {
             groupID: group.groupID,
             accID: firstAccData.accID + '',
             expected: 'CIRCULARKICK',
-            msg: 'trying to kick yourself'
+            msg: 'trying to kick yourself',
         },
         {
             groupID: 'g1234563545',
             accID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not existing'
+            msg: 'groupID is not existing',
         },
         {
             groupID: '',
             accID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not existing'
+            msg: 'groupID is not existing',
         },
         {
             groupID: true,
             accID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: [],
             accID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: {},
             accID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: 123,
             accID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: group.groupID,
             accID: thirdAccData.accID + '',
             expected: 'NOGROUPMEMBER',
-            msg: 'acc is not in group'
+            msg: 'acc is not in group',
         },
         {
             groupID: group.groupID,
             accID: '1234359458495',
             expected: 'NOGROUPMEMBER',
-            msg: 'Acc is not in group'
+            msg: 'Acc is not in group',
         },
         {
             groupID: group.groupID,
             accID: '',
             expected: 'NOGROUPMEMBER',
-            msg: 'Acc is not in group'
+            msg: 'Acc is not in group',
         },
         {
             groupID: group.groupID,
             accID: [],
             expected: 'NOGROUPMEMBER',
-            msg: 'Acc is not in group'
+            msg: 'Acc is not in group',
         },
         {
             groupID: group.groupID,
             accID: null,
             expected: 'NOGROUPMEMBER',
-            msg: 'Acc is not in group'
+            msg: 'Acc is not in group',
         },
         {
             groupID: group.groupID,
             accID: {},
             expected: 'NOGROUPMEMBER',
-            msg: 'Acc is not in group'
+            msg: 'Acc is not in group',
         },
         {
             groupID: group.groupID,
             accID: 123,
             expected: 'NOGROUPMEMBER',
-            msg: 'Acc is not in group'
+            msg: 'Acc is not in group',
         },
     ];
     const tests = await failBodies.map(async function (body) {
@@ -134,7 +134,7 @@ test('FAIL groupKickMember', async function (context) {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/groupkickmember`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

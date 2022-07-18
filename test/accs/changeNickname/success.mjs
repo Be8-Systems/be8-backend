@@ -20,7 +20,7 @@ test('SUCCESS changeNickname', async function () {
     const meOptions = getGetOptions(cookie);
     const meResponse = await nodeFetch(`${baseUrl}/me`, meOptions);
     const me = await meResponse.json();
-    
+
     assert.strictEqual(me.accObj.nickname, nickBody.newNickname);
     return assert(data.valid);
 });

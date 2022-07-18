@@ -20,190 +20,220 @@ test('FAIL subscribe', async function (context) {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const accData = await accResponse.json();
     const cookie = accResponse.headers.get('set-cookie');
-    const failBodies = [{
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'all properties are missing'
-    }, {
-        ...validSubscribe,
-        endpoint: 'bla',
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'endpoint is not valid'
-    }, {
-        ...validSubscribe,
-        endpoint: '',
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'endpoint is not valid'
-    }, {
-        ...validSubscribe,
-        endpoint: null,
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'endpoint is not valid'
-    }, {
-        ...validSubscribe,
-        endpoint: {},
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'endpoint is not valid'
-    }, {
-        ...validSubscribe,
-        endpoint: [],
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'endpoint is not valid'
-    }, {
-        ...validSubscribe,
-        endpoint: 1234,
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'endpoint is not valid'
-    }, {
-        ...validSubscribe,
-        expirationTime: '',
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'expirationTime is not valid'
-    }, {
-        ...validSubscribe,
-        expirationTime: true,
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'expirationTime is not valid'
-    }, {
-        ...validSubscribe,
-        expirationTime: {},
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'expirationTime is not valid'
-    }, {
-        ...validSubscribe,
-        expirationTime: [],
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'expirationTime is not valid'
-    }, {
-        ...validSubscribe,
-        expirationTime: 1234,
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'expirationTime is not valid'
-    }, {
-        ...validSubscribe,
-        keys: 'invalid',
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'keys object is not valid'
-    }, {
-        ...validSubscribe,
-        keys: {},
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'keys object is not valid'
-    }, {
-        ...validSubscribe,
-        keys: [],
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'keys object is not valid'
-    }, {
-        ...validSubscribe,
-        keys: null,
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'keys object is not valid'
-    }, {
-        ...validSubscribe,
-        keys: 1234,
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'keys object is not valid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            auth: 'eKOsJ8KlLI6OAWzNmn6Dow'
+    const failBodies = [
+        {
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'all properties are missing',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'p256dh parameter is missing'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: '',
-            auth: 'eKOsJ8KlLI6OAWzNmn6Dow'
+        {
+            ...validSubscribe,
+            endpoint: 'bla',
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'endpoint is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'p256dh is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: [],
-            auth: 'eKOsJ8KlLI6OAWzNmn6Dow'
+        {
+            ...validSubscribe,
+            endpoint: '',
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'endpoint is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'p256dh is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: {},
-            auth: 'eKOsJ8KlLI6OAWzNmn6Dow'
+        {
+            ...validSubscribe,
+            endpoint: null,
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'endpoint is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'p256dh is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: null,
-            auth: 'eKOsJ8KlLI6OAWzNmn6Dow'
+        {
+            ...validSubscribe,
+            endpoint: {},
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'endpoint is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'p256dh is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 1234,
-            auth: 'eKOsJ8KlLI6OAWzNmn6Dow'
+        {
+            ...validSubscribe,
+            endpoint: [],
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'endpoint is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'p256dh is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek'
+        {
+            ...validSubscribe,
+            endpoint: 1234,
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'endpoint is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'auth parameter is missing'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
-            auth: ''
+        {
+            ...validSubscribe,
+            expirationTime: '',
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'expirationTime is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'auth is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
-            auth: false
+        {
+            ...validSubscribe,
+            expirationTime: true,
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'expirationTime is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'auth is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
-            auth: {}
+        {
+            ...validSubscribe,
+            expirationTime: {},
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'expirationTime is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'auth is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
-            auth: []
+        {
+            ...validSubscribe,
+            expirationTime: [],
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'expirationTime is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'auth is invalid'
-    }, {
-        ...validSubscribe,
-        keys: {
-            p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
-            auth: 1234
+        {
+            ...validSubscribe,
+            expirationTime: 1234,
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'expirationTime is not valid',
         },
-        expected: 'INVALIDSUBSCRIBE',
-        msg: 'auth is invalid'
-    }];
+        {
+            ...validSubscribe,
+            keys: 'invalid',
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'keys object is not valid',
+        },
+        {
+            ...validSubscribe,
+            keys: {},
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'keys object is not valid',
+        },
+        {
+            ...validSubscribe,
+            keys: [],
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'keys object is not valid',
+        },
+        {
+            ...validSubscribe,
+            keys: null,
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'keys object is not valid',
+        },
+        {
+            ...validSubscribe,
+            keys: 1234,
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'keys object is not valid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                auth: 'eKOsJ8KlLI6OAWzNmn6Dow',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'p256dh parameter is missing',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: '',
+                auth: 'eKOsJ8KlLI6OAWzNmn6Dow',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'p256dh is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: [],
+                auth: 'eKOsJ8KlLI6OAWzNmn6Dow',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'p256dh is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: {},
+                auth: 'eKOsJ8KlLI6OAWzNmn6Dow',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'p256dh is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: null,
+                auth: 'eKOsJ8KlLI6OAWzNmn6Dow',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'p256dh is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 1234,
+                auth: 'eKOsJ8KlLI6OAWzNmn6Dow',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'p256dh is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'auth parameter is missing',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
+                auth: '',
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'auth is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
+                auth: false,
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'auth is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
+                auth: {},
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'auth is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
+                auth: [],
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'auth is invalid',
+        },
+        {
+            ...validSubscribe,
+            keys: {
+                p256dh: 'BJ5iO_p2tZ7b-t60jz_ax6msZ_rlhySfz_y7lXGvOgb8gGXeLuYJ5lwssbc5iZhlnd9NBEO_4-E9M9BRxiJskek',
+                auth: 1234,
+            },
+            expected: 'INVALIDSUBSCRIBE',
+            msg: 'auth is invalid',
+        },
+    ];
     const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/subscribe`, options);
             const data = await response.json();
-            
+
             return assert.strictEqual(data.error, body.expected);
         });
     });

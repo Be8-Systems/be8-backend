@@ -14,27 +14,27 @@ test('FAIL startConversation', async function (context) {
         {
             receiverID: '113434543',
             expected: 'ACCNOTEXISTS',
-            msg: 'Acc id is not existing.'
+            msg: 'Acc id is not existing.',
         },
         {
             receiverID: [],
             expected: 'ACCNOTEXISTS',
-            msg: 'Acc id is not existing.'
+            msg: 'Acc id is not existing.',
         },
         {
             receiverID: {},
             expected: 'ACCNOTEXISTS',
-            msg: 'Acc id is not existing.'
+            msg: 'Acc id is not existing.',
         },
         {
             receiverID: '',
             expected: 'ACCNOTEXISTS',
-            msg: 'Acc id is not existing.'
+            msg: 'Acc id is not existing.',
         },
         {
             receiverID: firstAccData.accID + '',
             expected: 'CIRCULARCONVERSATION',
-            msg: 'You cannot start a conversation with yourself.'
+            msg: 'You cannot start a conversation with yourself.',
         },
     ];
 
@@ -43,7 +43,7 @@ test('FAIL startConversation', async function (context) {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/startconversation`, options);
             const data = await response.json();
-            
+
             return assert.strictEqual(data.error, body.expected);
         });
     });

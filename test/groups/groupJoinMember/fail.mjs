@@ -36,41 +36,41 @@ test('FAIL groupJoinMember', async function (context) {
             groupID: group.groupID,
             alreadyJoinedCookie,
             expected: 'ISALREADYMEMBER',
-            msg: 'this acc is already a member of the group'
+            msg: 'this acc is already a member of the group',
         },
         {
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID parameter is missing'
+            msg: 'groupID parameter is missing',
         },
         {
             groupID: 'g12345635454545',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not existing'
+            msg: 'groupID is not existing',
         },
         {
             groupID: '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not existing'
+            msg: 'groupID is not existing',
         },
         {
             groupID: false,
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: [],
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: {},
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
         {
             groupID: 123,
             expected: 'GROUPNOTEXISTING',
-            msg: 'groupID is not a string'
+            msg: 'groupID is not a string',
         },
     ];
     const tests = await failBodies.map(async function (body) {
@@ -79,7 +79,7 @@ test('FAIL groupJoinMember', async function (context) {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/groupjoinmember`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

@@ -20,13 +20,13 @@ test('SUCCESS update destroyCode', async function () {
     const updateBody = {
         code: randomString(10),
         oldCode: codeBody.destroyCode,
-        codeType: 'destroy'
+        codeType: 'destroy',
     };
     const updateOptions = getPostOptions(updateBody, cookie);
     const response = await nodeFetch(`${baseUrl}/codeupdate`, updateOptions);
     const data = await response.json();
-    const { unlockCode, destroyCode }  = await redis.hGetAll(`codes:${accData.accID}`);
-    
+    const { unlockCode, destroyCode } = await redis.hGetAll(`codes:${accData.accID}`);
+
     await redis.disconnect();
     assert.strictEqual(unlockCode, codeBody.unlockCode);
     assert.strictEqual(destroyCode, updateBody.code);

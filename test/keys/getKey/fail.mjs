@@ -25,40 +25,48 @@ test('FAIL getKey', async function (context) {
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
     await nodeFetch(`${baseUrl}/setkey`, setKeyOptions);
     // fail getKey
-    const failBodies = [{
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID parameter is missing'
-    }, {
-        accID: '',
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID is not existing'
-    }, {
-        accID: '23842372847',
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID is not existing'
-    }, {
-        accID: null,
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID is not a string'
-    }, {
-        accID: {},
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID is not a string'
-    }, {
-        accID: [],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID is not a string'
-    }, {
-        accID: 1234,
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accID is not a string'
-    }];
+    const failBodies = [
+        {
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID parameter is missing',
+        },
+        {
+            accID: '',
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID is not existing',
+        },
+        {
+            accID: '23842372847',
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID is not existing',
+        },
+        {
+            accID: null,
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID is not a string',
+        },
+        {
+            accID: {},
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID is not a string',
+        },
+        {
+            accID: [],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID is not a string',
+        },
+        {
+            accID: 1234,
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accID is not a string',
+        },
+    ];
     const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/getkey`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

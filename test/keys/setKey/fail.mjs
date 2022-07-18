@@ -18,253 +18,291 @@ test('SUCCESS setKey', async function (context) {
     const accResponse = await nodeFetch(`${baseUrl}/newAcc`, accOptions);
     const cookie = accResponse.headers.get('set-cookie');
     // fail setKey
-    const failBodies = [{
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'publicKey parameter is missing'
-    }, {
-        publicKey: {},
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'publicKey object is empty'
-    }, {
-        publicKey: 'dfd',
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'publicKey is not an object'
-    }, {
-        publicKey: [],
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'publicKey is not an object'
-    }, {
-        publicKey: null,
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'publicKey is not an object'
-    }, {
-        publicKey: 1234,
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'publicKey is not an object'
-    }, {
-        publicKey: {
-            ...validKey,
-            crv: 'P-1234'
+    const failBodies = [
+        {
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'publicKey parameter is missing',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'crv is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            crv: ''
+        {
+            publicKey: {},
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'publicKey object is empty',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'crv is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            crv: null
+        {
+            publicKey: 'dfd',
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'publicKey is not an object',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'crv is not a string'
-    }, {
-        publicKey: {
-            ...validKey,
-            crv: {}
+        {
+            publicKey: [],
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'publicKey is not an object',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'crv is not a string'
-    }, {
-        publicKey: {
-            ...validKey,
-            crv: []
+        {
+            publicKey: null,
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'publicKey is not an object',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'crv is not a string'
-    }, {
-        publicKey: {
-            ...validKey,
-            crv: 1234
+        {
+            publicKey: 1234,
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'publicKey is not an object',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'crv is not a string'
-    }, {
-        publicKey: {
-            ...validKey,
-            ext: false
+        {
+            publicKey: {
+                ...validKey,
+                crv: 'P-1234',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'crv is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'ext is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            ext: ''
+        {
+            publicKey: {
+                ...validKey,
+                crv: '',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'crv is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'ext is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            ext: [] 
+        {
+            publicKey: {
+                ...validKey,
+                crv: null,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'crv is not a string',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'ext is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            ext: {}
+        {
+            publicKey: {
+                ...validKey,
+                crv: {},
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'crv is not a string',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'ext is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            ext: 1234
+        {
+            publicKey: {
+                ...validKey,
+                crv: [],
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'crv is not a string',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'ext is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            key_ops: false
+        {
+            publicKey: {
+                ...validKey,
+                crv: 1234,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'crv is not a string',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'key_ops is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            key_ops: ''
+        {
+            publicKey: {
+                ...validKey,
+                ext: false,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'ext is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'key_ops is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            key_ops: {}
+        {
+            publicKey: {
+                ...validKey,
+                ext: '',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'ext is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'key_ops is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            key_ops: 1234
+        {
+            publicKey: {
+                ...validKey,
+                ext: [],
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'ext is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'key_ops is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            kty: 'ECT'
+        {
+            publicKey: {
+                ...validKey,
+                ext: {},
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'ext is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'kty is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            kty: ''
+        {
+            publicKey: {
+                ...validKey,
+                ext: 1234,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'ext is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'kty is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            kty: null
+        {
+            publicKey: {
+                ...validKey,
+                key_ops: false,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'key_ops is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'kty is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            kty: {}
+        {
+            publicKey: {
+                ...validKey,
+                key_ops: '',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'key_ops is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'kty is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            kty: []
+        {
+            publicKey: {
+                ...validKey,
+                key_ops: {},
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'key_ops is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'kty is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            kty: 1234
+        {
+            publicKey: {
+                ...validKey,
+                key_ops: 1234,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'key_ops is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'kty is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            x: ''
+        {
+            publicKey: {
+                ...validKey,
+                kty: 'ECT',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'kty is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'x is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            x: false
+        {
+            publicKey: {
+                ...validKey,
+                kty: '',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'kty is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'x is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            x: {}
+        {
+            publicKey: {
+                ...validKey,
+                kty: null,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'kty is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'x is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            x: []
+        {
+            publicKey: {
+                ...validKey,
+                kty: {},
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'kty is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'x is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            x: 1234
+        {
+            publicKey: {
+                ...validKey,
+                kty: [],
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'kty is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'x is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            y: ''
+        {
+            publicKey: {
+                ...validKey,
+                kty: 1234,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'kty is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'y is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            y: true
+        {
+            publicKey: {
+                ...validKey,
+                x: '',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'x is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'y is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            y: []
+        {
+            publicKey: {
+                ...validKey,
+                x: false,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'x is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'y is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            y: {}
+        {
+            publicKey: {
+                ...validKey,
+                x: {},
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'x is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'y is invalid'
-    }, {
-        publicKey: {
-            ...validKey,
-            y: 1234
+        {
+            publicKey: {
+                ...validKey,
+                x: [],
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'x is invalid',
         },
-        expected: 'INVALIDPUBLICKEY',
-        msg: 'y is invalid'
-    }];
+        {
+            publicKey: {
+                ...validKey,
+                x: 1234,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'x is invalid',
+        },
+        {
+            publicKey: {
+                ...validKey,
+                y: '',
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'y is invalid',
+        },
+        {
+            publicKey: {
+                ...validKey,
+                y: true,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'y is invalid',
+        },
+        {
+            publicKey: {
+                ...validKey,
+                y: [],
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'y is invalid',
+        },
+        {
+            publicKey: {
+                ...validKey,
+                y: {},
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'y is invalid',
+        },
+        {
+            publicKey: {
+                ...validKey,
+                y: 1234,
+            },
+            expected: 'INVALIDPUBLICKEY',
+            msg: 'y is invalid',
+        },
+    ];
     const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/setkey`, options);
             const data = await response.json();
-            
+
             return assert.strictEqual(data.error, body.expected);
         });
     });

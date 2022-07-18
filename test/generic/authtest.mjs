@@ -19,7 +19,7 @@ test('FAIL getMessages', async function (context) {
     const invalidCookie = 'invalid';
     const body = {
         groupID: group.groupID,
-        accID: acc.accID + ''
+        accID: acc.accID + '',
     };
     const postOptions = getPostOptions(body, invalidCookie);
     const getOptions = getGetOptions(invalidCookie);
@@ -50,7 +50,7 @@ test('FAIL getMessages', async function (context) {
         [`${baseUrl}/codeset`, postOptions],
         [`${baseUrl}/codeunlock`, postOptions],
         [`${baseUrl}/codeupdate`, postOptions],
-        [`${baseUrl}/endlessvalidate`, postOptions]
+        [`${baseUrl}/endlessvalidate`, postOptions],
     ];
 
     const tests = await routesWithAuth.map(async function (options) {

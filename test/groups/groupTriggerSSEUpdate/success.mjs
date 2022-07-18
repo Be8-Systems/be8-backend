@@ -20,11 +20,11 @@ test('SUCCESS groupTriggerSSEUpdate', async function () {
     // group trigger sse update
     const updateBody = {
         groupID: group.groupID,
-        update: 'joinmember'
+        update: 'joinmember',
     };
     const updateOptions = getPostOptions(updateBody, cookie);
     const updateResponse = await nodeFetch(`${baseUrl}/grouptriggersseupdate`, updateOptions);
     const update = await updateResponse.json();
-  
+
     return assert(update.valid);
 });

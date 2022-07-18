@@ -39,83 +39,83 @@ test('FAIL groupAddMember', async function (context) {
             groupID: 'g1234563545',
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group id not existing'
+            msg: 'group id not existing',
         },
         {
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group parameter is missing'
+            msg: 'group parameter is missing',
         },
         {
             groupID: null,
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group id not a string'
+            msg: 'group id not a string',
         },
         {
             groupID: [],
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group id not a string'
+            msg: 'group id not a string',
         },
         {
             groupID: {},
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group id not a string'
+            msg: 'group id not a string',
         },
         {
             groupID: '',
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group id not existing'
+            msg: 'group id not existing',
         },
         {
             groupID: 123,
             memberID: secondAccData.accID + '',
             expected: 'GROUPNOTEXISTING',
-            msg: 'group id not a string'
+            msg: 'group id not a string',
         },
         {
             groupID: group.groupID,
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id param is missing'
+            msg: 'member id param is missing',
         },
         {
             groupID: group.groupID,
             memberID: '134342534',
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id not existing'
+            msg: 'member id not existing',
         },
         {
             groupID: group.groupID,
             memberID: '',
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id not existing'
+            msg: 'member id not existing',
         },
         {
             groupID: group.groupID,
             memberID: [],
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id not a string'
+            msg: 'member id not a string',
         },
         {
             groupID: group.groupID,
             memberID: {},
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id not a string'
+            msg: 'member id not a string',
         },
         {
             groupID: group.groupID,
             memberID: 123,
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id not a string'
+            msg: 'member id not a string',
         },
         {
             groupID: group.groupID,
             memberID: null,
             expected: 'MEMBERNOTEXISTING',
-            msg: 'member id not a string'
+            msg: 'member id not a string',
         },
         {
             groupID: group.groupID,
@@ -126,7 +126,7 @@ test('FAIL groupAddMember', async function (context) {
             groupID: group.groupID,
             memberID: thirdAccData.accID + '', // non admin trying to add
             expected: 'NOTADMIN',
-            userCookie
+            userCookie,
         },
     ];
     const tests = await failBodies.map(async function (body) {
@@ -135,7 +135,7 @@ test('FAIL groupAddMember', async function (context) {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/groupaddmember`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

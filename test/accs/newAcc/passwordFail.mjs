@@ -17,7 +17,7 @@ const options = {
 test('FAIL newAcc password', async function () {
     const response = await fetch(`${baseUrl}/newAcc`, options);
     const data = await response.json();
-    
+
     assert.strictEqual(data.valid, false);
     return assert.strictEqual(data.warning, 'PASSWORDFAILURE');
 });

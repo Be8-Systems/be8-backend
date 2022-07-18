@@ -21,14 +21,14 @@ test('SUCCESS endlessValidate', async function () {
     const codeSetOptions = getPostOptions(codeBody, cookie);
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const endlessBody = {
-        token
+        token,
     };
     const endlessOptions = getPostOptions(endlessBody, cookie);
     const response = await nodeFetch(`${baseUrl}/endlessvalidate`, endlessOptions);
     const data = await response.json();
     const accExpiring = await redis.ttl(`acc:${accData.accID}`);
     const codesExpiring = await redis.ttl(`codes:${accData.accID}`);
-    
+
     await redis.disconnect();
     assert.strictEqual(accExpiring, hundredYears);
     assert.strictEqual(codesExpiring, hundredYears);

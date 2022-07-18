@@ -4,9 +4,7 @@ import CryptoJS from 'crypto-js';
 const port = 3000;
 const baseUrl = `http://127.0.0.1:${port}`;
 // ToDo change me to static data
-export {
-    baseUrl
-};
+export { baseUrl };
 
 export function newAccOptions(nickname = false) {
     const password = randomString(14);
@@ -18,7 +16,7 @@ export function newAccOptions(nickname = false) {
         body: JSON.stringify({
             password: 'U2FsdGVkX19fIs07t/DUfTAkWvalf6lI0Xg5kZ5cCii84zSeQfIlQ21WjFBYZVIzBqcelpRk+zqoa9wXxNr07g==',
             nickname: nickname || randomString(10),
-            salt: '1657105032826'
+            salt: '1657105032826',
         }),
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },

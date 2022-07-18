@@ -36,46 +36,55 @@ test('FAIL groupGetMembers', async function (context) {
     const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
     const added = await addResponse.json();
     // fail get members
-    const failBodies = [{
-        groupID: group.groupID,
-        nonGroupCookie,
-        expected: 'NOGROUPMEMBER',
-        msg: 'non group member trying to get group members'
-    }, {
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID parameter is missing'
-    }, {
-        groupID: '346384738478',
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID not existing'
-    }, {
-        groupID: '',
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID not existing'
-    }, {
-        groupID: false,
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID not a string'
-    }, {
-        groupID: [],
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID not a string'
-    }, {
-        groupID: {},
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID not a string'
-    }, {
-        groupID: 1234,
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID not a string'
-    }];
+    const failBodies = [
+        {
+            groupID: group.groupID,
+            nonGroupCookie,
+            expected: 'NOGROUPMEMBER',
+            msg: 'non group member trying to get group members',
+        },
+        {
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID parameter is missing',
+        },
+        {
+            groupID: '346384738478',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID not existing',
+        },
+        {
+            groupID: '',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID not existing',
+        },
+        {
+            groupID: false,
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID not a string',
+        },
+        {
+            groupID: [],
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID not a string',
+        },
+        {
+            groupID: {},
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID not a string',
+        },
+        {
+            groupID: 1234,
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID not a string',
+        },
+    ];
     const tests = await failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const cookie = body.nonGroupCookie || validCookie;
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/groupgetcurrentversion`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

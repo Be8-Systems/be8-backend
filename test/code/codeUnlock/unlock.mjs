@@ -16,7 +16,7 @@ test('SUCCESS codeUnlock', async function () {
     const codeSetOptions = getPostOptions(codeBody, cookie);
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const unlockBody = {
-        code: codeBody.unlockCode
+        code: codeBody.unlockCode,
     };
     const unlockOptions = getPostOptions(unlockBody, cookie);
     const response = await nodeFetch(`${baseUrl}/codeunlock`, unlockOptions);

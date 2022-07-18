@@ -25,68 +25,83 @@ test('FAIL getKeys', async function (context) {
     const setKeyOptions = getPostOptions(setKeyBody, cookie);
     const response = await nodeFetch(`${baseUrl}/setkey`, setKeyOptions);
     // getKes
-    const failBodies = [{
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs param is missing'
-    }, {
-        accIDs: [accData.accID + '', ''],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'one accID not valid'
-    }, {
-        accIDs: [accData.accID + '', '3874538473847'],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'one accID not valid'
-    }, {
-        accIDs: [accData.accID + '', false],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'one accID not a string'
-    }, {
-        accIDs: [accData.accID + '', {}],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'one accID not a string'
-    }, {
-        accIDs: [accData.accID + '', []],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'one accID not a string'
-    }, {
-        accIDs: [accData.accID + '', 1234],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'one accID not a string'
-    }, {
-        accIDs: accData.accID + '',
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs is not an array'
-    }, {
-        accIDs:  '',
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs is not an array'
-    }, {
-        accIDs: '1234',
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs is not an array'
-    }, {
-        accIDs: null,
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs is not an array'
-    }, {
-        accIDs: {},
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs is not an array'
-    }, {
-        accIDs: 1234,
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'accIDs is not an array'
-    }, {
-        accIDs: [],
-        expected: 'MEMBERNOTEXISTING',
-        msg: 'no valid accID'
-    }];
+    const failBodies = [
+        {
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs param is missing',
+        },
+        {
+            accIDs: [accData.accID + '', ''],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'one accID not valid',
+        },
+        {
+            accIDs: [accData.accID + '', '3874538473847'],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'one accID not valid',
+        },
+        {
+            accIDs: [accData.accID + '', false],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'one accID not a string',
+        },
+        {
+            accIDs: [accData.accID + '', {}],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'one accID not a string',
+        },
+        {
+            accIDs: [accData.accID + '', []],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'one accID not a string',
+        },
+        {
+            accIDs: [accData.accID + '', 1234],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'one accID not a string',
+        },
+        {
+            accIDs: accData.accID + '',
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs is not an array',
+        },
+        {
+            accIDs: '',
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs is not an array',
+        },
+        {
+            accIDs: '1234',
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs is not an array',
+        },
+        {
+            accIDs: null,
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs is not an array',
+        },
+        {
+            accIDs: {},
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs is not an array',
+        },
+        {
+            accIDs: 1234,
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'accIDs is not an array',
+        },
+        {
+            accIDs: [],
+            expected: 'MEMBERNOTEXISTING',
+            msg: 'no valid accID',
+        },
+    ];
     const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);
             const response = await nodeFetch(`${baseUrl}/getkeys`, options);
             const data = await response.json();
-            
+
             assert(!data.valid);
             return assert.strictEqual(data.reason, body.expected);
         });

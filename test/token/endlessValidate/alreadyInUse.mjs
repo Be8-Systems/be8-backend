@@ -20,13 +20,13 @@ test('SUCCESS token already in use', async function () {
     const codeSetOptions = getPostOptions(codeBody, cookie);
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const endlessBody = {
-        token
+        token,
     };
     const endlessOptions = getPostOptions(endlessBody, cookie);
     await nodeFetch(`${baseUrl}/endlessvalidate`, endlessOptions);
     const response = await nodeFetch(`${baseUrl}/endlessvalidate`, endlessOptions);
     const data = await response.json();
-    
+
     await redis.disconnect();
     assert(data.tokenInUse);
     return assert(!data.valid);

@@ -68,7 +68,7 @@ function startNgrok() {
         .then(console.log);
 }
 
-export default function start ({ fakeTokens = [], staticFiles = './node_modules/be8-frontend/dist/' }) {
+export default function start({ fakeTokens = [], staticFiles = './node_modules/be8-frontend/dist/' }) {
     app.disable('x-powered-by');
     app.use(cors());
     app.use(
@@ -100,7 +100,7 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
     app.use(compression());
     app.use('/', Express.static(staticFiles));
     app.use('/', Express.static(`${staticFiles}prod`));
-    
+
     newAccRoute(app);
     getThreadsRoute(app);
     meRoute(app);
@@ -137,7 +137,7 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
     codeUpdate(app);
     endlessValidate(app);
     insightsScheduler();
-    
+
     if (fakeTokens.length > 0) {
         const proms = fakeTokens.map(function ({ token, type, validTime }) {
             const basic = { active: false, type };
@@ -152,9 +152,9 @@ export default function start ({ fakeTokens = [], staticFiles = './node_modules/
         startListenEncrypted(app);
     } else {
         app.listen(PORT, () => {});
-    
+
         if (isTunnel) {
             startNgrok();
         }
-    }    
+    }
 }

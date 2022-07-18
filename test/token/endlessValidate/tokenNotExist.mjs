@@ -18,11 +18,11 @@ test('SUCCESS token not existing', async function () {
     const codeSetOptions = getPostOptions(codeBody, cookie);
     await nodeFetch(`${baseUrl}/codeset`, codeSetOptions);
     const endlessBody = {
-        token
+        token,
     };
     const endlessOptions = getPostOptions(endlessBody, cookie);
     const response = await nodeFetch(`${baseUrl}/endlessvalidate`, endlessOptions);
     const data = await response.json();
-    
+
     return assert.strictEqual(data.error, 'TOKENNOTEXIST');
 });

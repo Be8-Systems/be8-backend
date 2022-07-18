@@ -18,7 +18,7 @@ test('SUCCESS codeHas', async function () {
     const codeHasOptions = getGetOptions(cookie);
     const response = await nodeFetch(`${baseUrl}/codehas`, codeHasOptions);
     const data = await response.json();
-    
+
     assert(data.hasCode);
     return assert(data.valid);
 });
