@@ -1,6 +1,6 @@
 {
     "name": "be8-backend",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "description": "Are you still using whatsapp?",
     "main": "index.mjs",
     "type": "module",
