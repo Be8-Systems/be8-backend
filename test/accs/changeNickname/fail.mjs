@@ -18,8 +18,8 @@ const failBodies = [
     },
     {
         oldNickname: nickname,
-        newNickname: randomString(21),
-        msg: 'newNickname too long (max length 20)',
+        newNickname: randomString(31),
+        msg: 'newNickname too long (max length 30)',
     },
     {
         oldNickname: nickname,

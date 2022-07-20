@@ -27,7 +27,7 @@ test('FAIL writeMessage', async function (context) {
         sender: firstAccData.accID + '',
         text: randomString(20),
         threadID: conversation.threadID,
-        type: 'textMessage',
+        messageType: 'textMessage',
     };
     const failBodies = [
         {
@@ -110,39 +110,39 @@ test('FAIL writeMessage', async function (context) {
         },
         {
             ...validMessage,
-            type: 'blaMessage',
+            messageType: 'blaMessage',
             expected: 'INVALIDMESSAGETYPE',
-            msg: 'wrong messageType',
+            msg: 'wrong messagemessageType',
         },
         {
             ...validMessage,
-            type: false,
+            messageType: false,
             expected: 'INVALIDMESSAGETYPE',
-            msg: 'messageType is not a string',
+            msg: 'messagemessageType is not a string',
         },
         {
             ...validMessage,
-            type: '',
+            messageType: '',
             expected: 'INVALIDMESSAGETYPE',
-            msg: 'messageType is not a string',
+            msg: 'messagemessageType is not a string',
         },
         {
             ...validMessage,
-            type: {},
+            messageType: {},
             expected: 'INVALIDMESSAGETYPE',
-            msg: 'messageType is not a string',
+            msg: 'messagemessageType is not a string',
         },
         {
             ...validMessage,
-            type: [],
+            messageType: [],
             expected: 'INVALIDMESSAGETYPE',
-            msg: 'messageType is not a string',
+            msg: 'messagemessageType is not a string',
         },
         {
             ...validMessage,
-            type: 123,
+            messageType: 123,
             expected: 'INVALIDMESSAGETYPE',
-            msg: 'messageType is not a string',
+            msg: 'messagemessageType is not a string',
         },
     ];
 

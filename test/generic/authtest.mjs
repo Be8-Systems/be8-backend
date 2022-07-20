@@ -26,7 +26,7 @@ test('FAIL getMessages', async function (context) {
     const routesWithAuth = [
         [`${baseUrl}/me`, getOptions],
         [`${baseUrl}/changenickname`, postOptions],
-        [`${baseUrl}/statusSet`, postOptions],
+        [`${baseUrl}/userstatusset`, postOptions],
         [`${baseUrl}/getmessages`, postOptions],
         [`${baseUrl}/getthreads`, getOptions],
         [`${baseUrl}/startconversation`, postOptions],

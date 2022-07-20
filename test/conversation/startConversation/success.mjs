@@ -14,7 +14,7 @@ test('SUCCESS startConversation', async function () {
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
     // start conversation
-    const convBody = { receiverID: secondAccData.accID };
+    const convBody = { receiverID: secondAccData.accID + '' };
     const startConversationOptions = getPostOptions(convBody, cookie);
     const convResponse = await nodeFetch(`${baseUrl}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();

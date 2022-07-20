@@ -16,7 +16,7 @@ test('SUCCESS getMessages', async function () {
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
     // start conversation
-    const convBody = { receiverID: secondAccData.accID };
+    const convBody = { receiverID: secondAccData.accID + '' };
     const startConversationOptions = getPostOptions(convBody, cookie);
     const convResponse = await nodeFetch(`${baseUrl}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
@@ -27,7 +27,8 @@ test('SUCCESS getMessages', async function () {
         sender: firstAccData.accID + '',
         text: randomString(20),
         threadID: conversation.threadID,
-        type: 'textMessage',
+        messageType: 'text',
+        type: 'user'
     };
     const writeMessageOptions = getPostOptions(writeBody, cookie);
     const writeResponse = await nodeFetch(`${baseUrl}/writemessage`, writeMessageOptions);
@@ -41,9 +42,9 @@ test('SUCCESS getMessages', async function () {
 
     assert.strictEqual(messages.messages.length, 2);
     assert.strictEqual(systemMessage.messageID, '1');
-    assert.strictEqual(systemMessage.type, 'system');
+    assert.strictEqual(systemMessage.messageType, 'system');
     assert.strictEqual(firstMessage.messageID, '2');
-    assert.strictEqual(firstMessage.type, 'textMessage');
+    assert.strictEqual(firstMessage.messageType, 'text');
     assert.strictEqual(firstMessage.receiver, secondAccData.accID + '');
     assert.strictEqual(firstMessage.sender, firstAccData.accID + '');
     assert.strictEqual(firstMessage.nickname, nickname);

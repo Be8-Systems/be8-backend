@@ -2,9 +2,11 @@ import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
 import { baseUrl, newAccOptions, getPostOptions, getGetOptions } from '../../utils/utils.mjs';
+import randomString from '../../utils/randomString.mjs';
 
+const nickname = randomString(10);
 const firstAccOptions = newAccOptions();
-const secondAccOptions = newAccOptions();
+const secondAccOptions = newAccOptions(nickname);
 
 test('SUCCESS getThreads', async function () {
     // create accs
@@ -14,7 +16,7 @@ test('SUCCESS getThreads', async function () {
     const secondAccData = await secondAcc.json();
     const cookie = firstAcc.headers.get('set-cookie');
     // start conversation
-    const convBody = { receiverID: secondAccData.accID };
+    const convBody = { receiverID: secondAccData.accID + '' };
     const startConversationOptions = getPostOptions(convBody, cookie);
     const convResponse = await nodeFetch(`${baseUrl}/startconversation`, startConversationOptions);
     const conversation = await convResponse.json();
@@ -27,11 +29,10 @@ test('SUCCESS getThreads', async function () {
 
     assert.strictEqual(threads.threads.length, 2);
     assert.strictEqual(systemThread.sender, 's1');
-    assert.strictEqual(systemThread.type, 'system');
-    assert.strictEqual(systemThread.nickname, 'be8');
-    assert.strictEqual(systemThread.threadID, `${firstAccData.accID}:s1`);
-    assert.strictEqual(firstConv.sender, secondAccData.accID + '');
-    assert.strictEqual(firstConv.type, 'user');
-    assert.strictEqual(firstConv.threadID, conversation.threadID);
+    assert.strictEqual(systemThread.type, 'user');
+    assert.strictEqual(systemThread.nickname, nickname);
+    assert.strictEqual(systemThread.threadID, `${firstAccData.accID}:${secondAccData.accID}`);
+    assert.strictEqual(firstConv.sender, 's1');
+    assert.strictEqual(firstConv.type, 'system');
     return assert(threads.valid);
 });

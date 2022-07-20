@@ -14,27 +14,22 @@ test('FAIL statusSet', async function (context) {
             msg: 'status parameter is missing',
         },
         {
-            status: '',
-            expected: 'INVALIDSTATUS',
-            msg: 'status is too short',
-        },
-        {
-            status: true,
+            userStatus: true,
             expected: 'INVALIDSTATUS',
             msg: 'status is not a string',
         },
         {
-            status: {},
+            userStatus: {},
             expected: 'INVALIDSTATUS',
             msg: 'status is not a string',
         },
         {
-            status: [],
+            userStatus: [],
             expected: 'INVALIDSTATUS',
             msg: 'status is not a string',
         },
         {
-            status: 1234,
+            userStatus: 1234,
             expected: 'INVALIDSTATUS',
             msg: 'status is not a string',
         },
@@ -42,7 +37,7 @@ test('FAIL statusSet', async function (context) {
     const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);
-            const response = await nodeFetch(`${baseUrl}/statusset`, options);
+            const response = await nodeFetch(`${baseUrl}/userstatusset`, options);
             const data = await response.json();
 
             assert(!data.valid);
