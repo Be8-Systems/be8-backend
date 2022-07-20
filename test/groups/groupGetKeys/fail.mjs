@@ -34,12 +34,19 @@ test('FAIL groupGetKeys', async function (context) {
     };
     const addOptions = getPostOptions(addBody, validCookie);
     const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
+    // increase version
+    const increaseBody = {
+        groupID: group.groupID,
+    };
+    const increaseOptions = getPostOptions(increaseBody, validCookie);
+    const increaseResponse = await nodeFetch(`${baseUrl}/groupincreaseversion`, increaseOptions);
     // store key
     const storeBody = {
         accID,
         groupID: group.groupID,
         groupKey,
         keyholder: accID,
+        iv: randomString(10)
     };
     const storeOptions = getPostOptions(storeBody, validCookie);
     const storeResponse = await nodeFetch(`${baseUrl}/groupstorekey`, storeOptions);

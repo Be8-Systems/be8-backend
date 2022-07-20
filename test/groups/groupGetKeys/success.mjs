@@ -31,12 +31,19 @@ test('SUCCESS groupGetKeys', async function () {
     };
     const addOptions = getPostOptions(addBody, cookie);
     const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
+    // increase version
+    const increaseBody = {
+        groupID: group.groupID,
+    };
+    const increaseOptions = getPostOptions(increaseBody, cookie);
+    const increaseResponse = await nodeFetch(`${baseUrl}/groupincreaseversion`, increaseOptions);
     // store key
     const storeBody = {
         accID,
         groupID: group.groupID,
         groupKey,
         keyholder: accID,
+        iv: randomString(10)
     };
     const storeOptions = getPostOptions(storeBody, cookie);
     const storeResponse = await nodeFetch(`${baseUrl}/groupstorekey`, storeOptions);

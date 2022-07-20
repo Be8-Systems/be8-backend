@@ -21,6 +21,12 @@ test('FAIL groupGetCurrentVersion', async function (context) {
     const groupOptions = getPostOptions(groupBody, validCookie);
     const groupResponse = await nodeFetch(`${baseUrl}/groupcreate`, groupOptions);
     const group = await groupResponse.json();
+    // increase version
+    const increaseBody = {
+        groupID: group.groupID,
+    };
+    const increaseOptions = getPostOptions(increaseBody, validCookie);
+    const increaseResponse = await nodeFetch(`${baseUrl}/groupincreaseversion`, increaseOptions);
     // fail get current version
     const failBodies = [
         {

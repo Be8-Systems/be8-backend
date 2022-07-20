@@ -6,10 +6,8 @@ import randomString from '../../utils/randomString.mjs';
 
 const firstAccOptions = newAccOptions();
 const secondAccOptions = newAccOptions();
-const groupKey =
-    'J8KFhFn+obMLmvcJVc0rOocIgDvK3EWApKERyStxltLYViM8QmSc5+8H09cvbi3xGRuVfocSWXtGyamSKbxyfC721PGKM4KXUkGKLq+UJbj2HcPsUjki/kwmajGFbRbj6x8vNQ4CaaUER3s668Kzcvq/9s329crMPnXg/tzrZXfWJmAM9dqt5Rk4LyOcB7xDDniLOTQmSk3sKOJ3Pk0aLfydj3dmr1fBJrfPBdPIDqIdRN/FCySqcsgiLWanT0s5dqk9k1hurWmZdbuHjCiF2wa+NWGKydQF6Vk9Ve5L/iRJgvXFNXk6q24u6PPFaWIJ';
 
-test('SUCCESS groupStoreKey', async function () {
+test('SUCCESS groupIncreaseVersion', async function () {
     // create accs
     const firstAcc = await nodeFetch(`${baseUrl}/newAcc`, firstAccOptions);
     const secondAcc = await nodeFetch(`${baseUrl}/newAcc`, secondAccOptions);
@@ -30,24 +28,19 @@ test('SUCCESS groupStoreKey', async function () {
     };
     const addOptions = getPostOptions(addBody, cookie);
     const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
+    const added = await addResponse.json();
     // increase version
     const increaseBody = {
         groupID: group.groupID,
     };
     const increaseOptions = getPostOptions(increaseBody, cookie);
     const increaseResponse = await nodeFetch(`${baseUrl}/groupincreaseversion`, increaseOptions);
-    // store key
-    const storeBody = {
-        accID: secondAccData.accID + '',
-        groupID: group.groupID,
-        groupKey,
-        keyholder: secondAccData.accID + '',
-        iv: randomString(10)
-    };
-    const storeOptions = getPostOptions(storeBody, cookie);
-    const storeResponse = await nodeFetch(`${baseUrl}/groupstorekey`, storeOptions);
-    const stored = await storeResponse.json();
-
-    assert(stored.groupVersion, '1');
-    return assert(stored.valid);
+    const increased = await increaseResponse.json();
+    // get current version
+    const versionOptions = getPostOptions({ groupID: group.groupID }, cookie);
+    const currentVersionResponse = await nodeFetch(`${baseUrl}/groupgetcurrentversion`, versionOptions);
+    const currentVersion = await currentVersionResponse.json();
+    
+    assert.strictEqual(currentVersion.groupVersion, increased.groupVersion + '');
+    return assert(currentVersion.valid);
 });
