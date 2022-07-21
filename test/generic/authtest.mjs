@@ -34,6 +34,7 @@ test('FAIL getMessages', async function (context) {
         [`${baseUrl}/groupaddmember`, postOptions],
         [`${baseUrl}/groupcreate`, postOptions],
         [`${baseUrl}/groupgetcurrentversion`, postOptions],
+        [`${baseUrl}/groupincreaseversion`, postOptions],
         [`${baseUrl}/groupgetkeys`, postOptions],
         [`${baseUrl}/groupgetmembers`, postOptions],
         [`${baseUrl}/groupjoinmember`, postOptions],
