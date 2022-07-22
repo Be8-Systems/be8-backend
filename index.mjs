@@ -129,8 +129,8 @@ export default function start({ fakeTokens = [], staticFiles = './node_modules/b
     groupDestroyGroupRoute(app);
     groupKickMemberRoute(app);
     groupTriggerSSEUpdateRoute(app);
-    imageUploadRoute(app);
-    imageGetRoute(app);
+    imageUploadRoute(app, staticFiles);
+    imageGetRoute(app, staticFiles);
     codeHas(app);
     codeSet(app);
     codeUnlock(app);
