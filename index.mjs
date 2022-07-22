@@ -94,6 +94,7 @@ export default function start({ fakeTokens = [], staticFiles = './node_modules/b
                 maxAge: globals.hundredYears,
                 expires: new Date(Date.now() + globals.hundredYears),
                 secure: isProduction,
+                sameSite: 'strict'
             },
         })
     );
