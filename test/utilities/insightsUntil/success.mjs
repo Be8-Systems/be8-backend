@@ -22,7 +22,7 @@ test('SUCCESS insightsUntil', async function () {
         assert.strictEqual(typeof parsedDate, 'object');
         assert.notStrictEqual(parsedDate.toString(), 'Invalid Date');
         assert.strictEqual(typeof insights, 'object');
-        
+
         if (insights.length > 0) {
             insights.forEach(function (insight) {
                 assert.strictEqual(typeof insight[0], 'string');
