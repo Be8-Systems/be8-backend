@@ -106,7 +106,7 @@ export default function start({ fakeTokens = [], staticFiles = defaultStaticFile
     app.use(compression());
     app.use('/', Express.static(staticFiles[0]));
     app.use('/', Express.static(`${staticFiles[0]}prod`));
-    app.use('/insights', Express.static(staticFiles[1]))
+    app.use('/be8insights', Express.static(staticFiles[1]))
 
     newAccRoute(app);
     getThreadsRoute(app);
