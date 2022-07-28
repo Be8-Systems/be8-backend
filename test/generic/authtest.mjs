@@ -45,7 +45,6 @@ test('FAIL getMessages', async function (context) {
         [`${baseUrl}/getkey`, postOptions],
         [`${baseUrl}/getkeys`, postOptions],
         [`${baseUrl}/setkey`, postOptions],
-        [`${baseUrl}/insights`, getOptions],
         [`${baseUrl}/subscribe`, postOptions],
         [`${baseUrl}/codehas`, getOptions],
         [`${baseUrl}/codeset`, postOptions],
