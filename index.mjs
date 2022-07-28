@@ -53,6 +53,10 @@ const PORT = 3000;
 const app = Express();
 const redisStore = innerRedisStore(session);
 const isProduction = process.env.NODE_ENV === 'production';
+const defaultStaticFiles = [
+    './node_modules/be8-frontend/dist/',
+    './node_modules/be8-insights/dist/'
+];
 
 function startNgrok() {
     return ngrok
@@ -69,7 +73,7 @@ function startNgrok() {
         .then(console.log);
 }
 
-export default function start({ fakeTokens = [], staticFiles = './node_modules/be8-frontend/dist/' }) {
+export default function start({ fakeTokens = [], staticFiles = defaultStaticFiles }) {
     app.disable('x-powered-by');
     app.use(cors());
     app.use(
@@ -100,8 +104,9 @@ export default function start({ fakeTokens = [], staticFiles = './node_modules/b
         })
     );
     app.use(compression());
-    app.use('/', Express.static(staticFiles));
-    app.use('/', Express.static(`${staticFiles}prod`));
+    app.use('/', Express.static(staticFiles[0]));
+    app.use('/', Express.static(`${staticFiles[0]}prod`));
+    app.use('/insights', Express.static(staticFiles[1]))
 
     newAccRoute(app);
     getThreadsRoute(app);
