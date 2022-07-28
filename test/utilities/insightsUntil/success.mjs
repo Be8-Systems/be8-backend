@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'assert/strict';
 import nodeFetch from 'node-fetch';
 import { baseUrl, newAccOptions, getPostOptions } from '../../utils/utils.mjs';
-import { DESTRUCTION } from 'dns';
 
 const accOptions = newAccOptions();
 
