@@ -17,6 +17,7 @@ import setKeyRoute from './lib/routes/keys/setKey.mjs';
 import getKeyRoute from './lib/routes/keys/getKey.mjs';
 import getKeysRoute from './lib/routes/keys/getKeys.mjs';
 import insightsRoute from './lib/routes/utilities/insights.mjs';
+import insightsUntilRoute from './lib/routes/utilities/insightsUntil.mjs';
 import inviteLinkRoute from './lib/routes/inviteLink/inviteLink.mjs';
 import groupJoinMember from './lib/routes/groups/groupJoinMember.mjs';
 import groupLeaveMember from './lib/routes/groups/groupLeaveMember.mjs';
@@ -107,6 +108,7 @@ export default function start({ fakeTokens = [], staticFiles = './node_modules/b
     meRoute(app);
     startConversationRoute(app);
     insightsRoute(app);
+    insightsUntilRoute(app);
     inviteLinkRoute(app);
     getMessagesRoute(app);
     writeMessageRoute(app);
