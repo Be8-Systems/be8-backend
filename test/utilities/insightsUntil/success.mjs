@@ -22,24 +22,13 @@ test('SUCCESS insightsUntil', async function () {
         assert.strictEqual(typeof parsedDate, 'object');
         assert.notStrictEqual(parsedDate.toString(), 'Invalid Date');
         assert.strictEqual(typeof insights, 'object');
-
-        if (insights.accs) {
-            assert.strictEqual(typeof parseInt(insights.accs), 'number');
-            assert.notStrictEqual(parseInt(insights.accs).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.groups), 'number');
-            assert.notStrictEqual(parseInt(insights.groups).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.threads), 'number');
-            assert.notStrictEqual(parseInt(insights.threads).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.messages), 'number');
-            assert.notStrictEqual(parseInt(insights.messages).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.sentInviteLinks), 'number');
-            assert.notStrictEqual(parseInt(insights.sentInviteLinks).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.usedInviteLinks), 'number');
-            assert.notStrictEqual(parseInt(insights.usedInviteLinks).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.sentGrouInviteLinks), 'number');
-            assert.notStrictEqual(parseInt(insights.sentGrouInviteLinks).toString(), 'NaN');
-            assert.strictEqual(typeof parseInt(insights.usedGroupInviteLinks), 'number');
-            assert.notStrictEqual(parseInt(insights.usedGroupInviteLinks).toString(), 'NaN');
+        
+        if (insights.length > 0) {
+            insights.forEach(function (insight) {
+                assert.strictEqual(typeof insight[0], 'string');
+                assert.strictEqual(typeof parseInt(insight[1]), 'number');
+                assert.notStrictEqual(parseInt(insight[1]).toString(), 'NaN');
+            });
         }
     });
 
