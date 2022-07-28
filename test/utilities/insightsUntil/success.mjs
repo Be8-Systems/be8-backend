@@ -11,12 +11,12 @@ test('SUCCESS insightsUntil', async function () {
     const cookie = accResponse.headers.get('set-cookie');
     const body = {
         start: '2022-07-01',
-        end: '2022-07-28'
+        end: '2022-07-28',
     };
     const insightOptions = getPostOptions(body, cookie);
     const response = await nodeFetch(`${baseUrl}/insightsuntil`, insightOptions);
     const { valid, insights } = await response.json();
-    
+
     insights.forEach(function ({ insights, date }) {
         const parsedDate = new Date(date);
 
@@ -42,7 +42,6 @@ test('SUCCESS insightsUntil', async function () {
             assert.strictEqual(typeof parseInt(insights.usedGroupInviteLinks), 'number');
             assert.notStrictEqual(parseInt(insights.usedGroupInviteLinks).toString(), 'NaN');
         }
-        
     });
 
     return assert(valid);

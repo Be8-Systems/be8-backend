@@ -39,7 +39,7 @@ test('SUCCESS groupGetCurrentVersion', async function () {
     const versionOptions = getPostOptions({ groupID: group.groupID }, cookie);
     const currentVersionResponse = await nodeFetch(`${baseUrl}/groupgetcurrentversion`, versionOptions);
     const currentVersion = await currentVersionResponse.json();
-    
+
     assert.strictEqual(typeof currentVersion.groupVersion, 'string');
     assert(!isNaN(currentVersion.groupVersion));
     return assert(currentVersion.valid);

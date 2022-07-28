@@ -20,7 +20,7 @@ test('SUCCESS inviteLink', async function (t) {
         const sentResponse = await nodeFetch(`${baseUrl}/invitelink`, sentOptions);
         const sent = await sentResponse.json();
         const afterRequest = await redis.get('sentInviteLinkAmmount');
-        
+
         assert.strictEqual(parseInt(beforeRequest) + 1, parseInt(afterRequest));
         return assert(sent.valid);
     });
@@ -33,7 +33,7 @@ test('SUCCESS inviteLink', async function (t) {
         const usedResponse = await nodeFetch(`${baseUrl}/invitelink`, usedOptions);
         const used = await usedResponse.json();
         const afterRequest = await redis.get('usedInviteLinkAmmount');
-        
+
         assert.strictEqual(parseInt(beforeRequest) + 1, parseInt(afterRequest));
         return assert(used.valid);
     });

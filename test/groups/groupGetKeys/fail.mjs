@@ -46,7 +46,7 @@ test('FAIL groupGetKeys', async function (context) {
         groupID: group.groupID,
         groupKey,
         keyholder: accID,
-        iv: randomString(10)
+        iv: randomString(10),
     };
     const storeOptions = getPostOptions(storeBody, validCookie);
     const storeResponse = await nodeFetch(`${baseUrl}/groupstorekey`, storeOptions);

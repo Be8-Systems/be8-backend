@@ -43,7 +43,7 @@ test('SUCCESS groupGetKeys', async function () {
         groupID: group.groupID,
         groupKey,
         keyholder: accID,
-        iv: randomString(10)
+        iv: randomString(10),
     };
     const storeOptions = getPostOptions(storeBody, cookie);
     const storeResponse = await nodeFetch(`${baseUrl}/groupstorekey`, storeOptions);

@@ -33,7 +33,7 @@ test('SUCCESS writeMessage', async function () {
     const writeResponse = await nodeFetch(`${baseUrl}/writemessage`, writeMessageOptions);
     const write = await writeResponse.json();
     const messageID = `message:${conversation.threadID}:2`;
-    
+
     assert.strictEqual(write.messageID, messageID);
     return assert(write.valid);
 });

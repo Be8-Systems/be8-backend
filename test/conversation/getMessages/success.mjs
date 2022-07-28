@@ -28,7 +28,7 @@ test('SUCCESS getMessages', async function () {
         text: randomString(20),
         threadID: conversation.threadID,
         messageType: 'text',
-        type: 'user'
+        type: 'user',
     };
     const writeMessageOptions = getPostOptions(writeBody, cookie);
     const writeResponse = await nodeFetch(`${baseUrl}/writemessage`, writeMessageOptions);

@@ -30,30 +30,37 @@ test('FAIL groupIncreaseVersion', async function (context) {
     const addResponse = await nodeFetch(`${baseUrl}/groupaddmember`, addOptions);
     const added = await addResponse.json();
     // increase version
-    const failBodies = [{
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID parameter is missing'
-    }, {
-        groupID: 'g111111',
-        expected: 'GROUPNOTEXISTING',
-        msg: 'group is not existing'
-    }, {
-        groupID: '',
-        expected: 'GROUPNOTEXISTING',
-        msg: 'group is not existing'
-    }, {
-        groupID: {},
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID is not a string'
-    }, {
-        groupID: [],
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID is not a string'
-    }, {
-        groupID: 1234,
-        expected: 'GROUPNOTEXISTING',
-        msg: 'groupID is not a string'
-    }];
+    const failBodies = [
+        {
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID parameter is missing',
+        },
+        {
+            groupID: 'g111111',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'group is not existing',
+        },
+        {
+            groupID: '',
+            expected: 'GROUPNOTEXISTING',
+            msg: 'group is not existing',
+        },
+        {
+            groupID: {},
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string',
+        },
+        {
+            groupID: [],
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string',
+        },
+        {
+            groupID: 1234,
+            expected: 'GROUPNOTEXISTING',
+            msg: 'groupID is not a string',
+        },
+    ];
     const tests = failBodies.map(async function (body) {
         await context.test(body.msg, async () => {
             const options = getPostOptions(body, cookie);

@@ -18,7 +18,7 @@ test('SUCCESS statusSet', async function () {
     const meOptions = getGetOptions(cookie);
     const meResponse = await nodeFetch(`${baseUrl}/me`, meOptions);
     const me = await meResponse.json();
-    
+
     assert.strictEqual(me.accObj.status, statusBody.status);
     return assert(data.valid);
 });
