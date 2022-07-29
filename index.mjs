@@ -47,16 +47,11 @@ import subscribe from './lib/routes/utilities/subscribe.mjs';
 import insightsScheduler from './lib/util/insightsScheduler.mjs';
 
 const isTunnel = process.env.NODE_ENV === 'tunnel';
-const args = process.argv.slice(2);
-const isFrontend = args.shift() === '--frontend';
 const PORT = 3000;
 const app = Express();
 const redisStore = innerRedisStore(session);
 const isProduction = process.env.NODE_ENV === 'production';
-const defaultStaticFiles = [
-    './node_modules/be8-frontend/dist/',
-    './node_modules/be8-insights/dist/'
-];
+const defaultStaticFiles = ['./node_modules/be8-frontend/dist/', './node_modules/be8-insights/dist/'];
 
 function startNgrok() {
     return ngrok
@@ -106,7 +101,7 @@ export default function start({ fakeTokens = [], staticFiles = defaultStaticFile
     app.use(compression());
     app.use('/', Express.static(staticFiles[0]));
     app.use('/', Express.static(`${staticFiles[0]}prod`));
-    app.use('/be8insights', Express.static(staticFiles[1]))
+    app.use('/be8insights', Express.static(staticFiles[1]));
 
     newAccRoute(app);
     getThreadsRoute(app);
