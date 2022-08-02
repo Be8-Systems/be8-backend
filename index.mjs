@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import session from 'express-session';
 import cors from 'cors';
-import ngrok from 'ngrok';
 import newAccRoute from './lib/routes/accs/newAcc.mjs';
 import getThreadsRoute from './lib/routes/conversations/getThreads.mjs';
 import getMessagesRoute from './lib/routes/conversations/getMessages.mjs';
@@ -46,27 +45,11 @@ import redis from './lib/util/redis.mjs';
 import subscribe from './lib/routes/utilities/subscribe.mjs';
 import insightsScheduler from './lib/util/insightsScheduler.mjs';
 
-const isTunnel = process.env.NODE_ENV === 'tunnel';
 const PORT = 3000;
 const app = Express();
 const redisStore = innerRedisStore(session);
 const isProduction = process.env.NODE_ENV === 'production';
 const defaultStaticFiles = ['./node_modules/be8-frontend/dist/', './node_modules/be8-insights/dist/'];
-
-function startNgrok() {
-    return ngrok
-        .connect({
-            authtoken: '1XvR9cNRX6yWAgzZl9fUOrB9fBd_5NYMs7AcDfcEyhZ5FmX6n',
-            proto: 'http',
-            addr: PORT,
-            subdomain: 'be8',
-            region: 'eu',
-            binPath: path => path.replace('app.asar', 'app.asar.unpacked'),
-            onStatusChange: console.log,
-            onLogEvent: console.log,
-        })
-        .then(console.log);
-}
 
 export default function start({ fakeTokens = [], staticFiles = defaultStaticFiles }) {
     app.disable('x-powered-by');
@@ -155,9 +138,5 @@ export default function start({ fakeTokens = [], staticFiles = defaultStaticFile
         startListenEncrypted(app);
     } else {
         app.listen(PORT, () => {});
-
-        if (isTunnel) {
-            startNgrok();
-        }
     }
 }
